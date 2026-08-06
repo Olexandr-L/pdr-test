@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { forkJoin, of } from 'rxjs';
+import { forkJoin, Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { QuestionCategory, QuestionWithCategory } from '../interfaces/questions.interfaces';
 import { categories } from '../maps/categories.map';
@@ -11,11 +11,10 @@ import { categories } from '../maps/categories.map';
 export class QuestionsService {
     private readonly http = inject(HttpClient);
 
-    public loadQuestions(): void {
+    public loadQuestions(): Observable<QuestionWithCategory[]> {
         const categoriesPaths = [...categories].map((cat) => cat.path);
 
-        // Ensure the files are available under the Angular assets (angular.json -> "assets").
-        forkJoin(
+        return forkJoin(
             categoriesPaths.map((path) =>
                 this.http.get<QuestionCategory>(path).pipe(
                     catchError(err => of(null)),
@@ -40,8 +39,6 @@ export class QuestionsService {
 
                 return questions;
             }),
-        ).subscribe((questions) => {
-            console.log('Questions loaded:', questions);
-        });
+        );
     }
 }
