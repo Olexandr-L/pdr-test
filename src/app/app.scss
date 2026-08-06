@@ -1,0 +1,8 @@
+@use '@angular/material' as mat;
+
+.mat-toolbar-title{
+    text-wrap: wrap;
+}
+.spacer {
+    flex: 1 1 auto;
+}
