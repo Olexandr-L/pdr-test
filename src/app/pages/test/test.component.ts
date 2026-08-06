@@ -16,22 +16,29 @@ export class TestComponent implements OnInit {
   public currentQuestion = this.testService.currentQuestion;
   public options = computed(() => {
     const question = this.currentQuestion();
+    if (!question) return [];
 
-    return ['1', '2', '3', '4'].map((key) => ({
+    return ['1', '2', '3', '4', '5'].map((key) => ({
       key: +key,
       value: question[key as keyof typeof question] as string,
     })).filter(o => !!o.value);
   });
+
+  public answers = this.testService.answers;
 
   ngOnInit() {
     this.testService.startTest();
   }
 
   public setAnswer(answer: number) {
-    console.log(`Answer: ${answer}`);
+    this.testService.setAnswer(answer);
+  }
+
+  public setQuestionIndex(index: number) {
+    this.testService.updateCurrentQuestionIndex(index);
   }
 
   public nextQuestion() {
-    const currentIndex = this.testService.nextQuestion();
+    this.testService.nextQuestion();
   }
 }

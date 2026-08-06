@@ -1,3 +1,22 @@
+.answer-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 20px;
+
+    .answer-item {
+        padding: 0px;
+        width: 30px;
+        height: 30px;
+        min-width: 30px;
+        min-height: 30px;
+    }
+}
+
+.question {
+    text-align: center;
+}
+
 .question-text {
     font-size: 17px;
     margin-bottom: 20px;
@@ -14,4 +33,8 @@
     display: flex;
     gap: 10px;
     flex-direction: column;
+}
+
+.option-button {
+    min-height: fit-content;
 }

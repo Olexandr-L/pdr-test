@@ -1,5 +1,5 @@
 import { computed, inject, Injectable, signal } from '@angular/core';
-import { QuestionWithCategory } from '../interfaces/questions.interfaces';
+import { QuestionWithCategory, UserAnswer } from '../interfaces/questions.interfaces';
 import { Store } from '@ngxs/store';
 import { QuestionsState } from '../storages/questions/questions.state';
 import { QuestionsActions } from '../storages/questions/questions.action';
@@ -16,11 +16,30 @@ export class TestService {
     private questions = signal<QuestionWithCategory[]>([]);
     private currentQuestionIndex = signal<number>(0);
 
+    private _answers = signal<UserAnswer[]>([]);
+    public answers = computed(() => this._answers());
+
     public currentQuestion = computed(() => {
         const questions = this.questions();
         const index = this.currentQuestionIndex();
         return questions[index] || null;
     });
+
+    public setAnswer(answer: number) {
+        const question = this.currentQuestion();
+        const answers = this.answers();
+        
+        console.log(answer, question?.answer);
+
+        answers[this.currentQuestionIndex()] = {
+            questionId: question?.id ?? 0,
+            categoryId: question?.category ?? 0,
+            answerIndex: answer,
+            isCorrect: question?.answer === answer,
+        };
+
+        this._answers.set(answers);
+    }
 
     public nextQuestion() {
         this.currentQuestionIndex.update((index) => index + 1);
@@ -32,6 +51,7 @@ export class TestService {
 
     public startTest() {
         this.testSize.set(DEFAULT_TEST_SIZE);
+        this._answers.set(new Array(DEFAULT_TEST_SIZE).fill({} as UserAnswer));
 
         this.store.dispatch(new QuestionsActions.Load()).subscribe(() => {
             const questions = this.store.selectSnapshot(QuestionsState.getRandomQuestions(this.testSize()));
