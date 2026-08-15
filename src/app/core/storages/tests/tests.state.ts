@@ -17,7 +17,7 @@ export class TestsState {
 
     static getTestById(id: number) {
         return createSelector([TestsState], (state: TestData[]) => {
-            return state.filter(test => test.id === id);
+            return state.filter(test => test.id === id)[0];
         });
     }
 

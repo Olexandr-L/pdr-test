@@ -1,0 +1,25 @@
+app-timer {
+    margin-bottom: 10px;
+}
+
+.question {
+    text-align: center;
+}
+
+.question-text {
+    font-size: 17px;
+    margin-bottom: 20px;
+}
+
+.image {
+    width: 100%;
+    max-width: 400px;
+    height: auto;
+    margin-bottom: 20px;
+}
+
+.options {
+    display: flex;
+    gap: 10px;
+    flex-direction: column;
+}
