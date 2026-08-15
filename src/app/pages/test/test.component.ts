@@ -3,10 +3,11 @@ import { MatButtonModule } from '@angular/material/button';
 import { RouterLink } from '@angular/router';
 import { TestService } from '@app/core/services/test.service';
 import { TimerComponent } from './components/timer/timer.component';
+import { QuestionSwitcherComponent } from './components/question-switcher/question-switcher.component';
 
 @Component({
 	selector: 'app-test',
-	imports: [MatButtonModule, TimerComponent, RouterLink],
+	imports: [MatButtonModule, TimerComponent, QuestionSwitcherComponent, RouterLink],
 	templateUrl: './test.component.html',
 	styleUrl: './test.component.scss',
 	changeDetection: ChangeDetectionStrategy.OnPush,
@@ -28,6 +29,12 @@ export class TestComponent implements OnInit {
 	});
 
 	public answers = this.testService.answers;
+
+	public readonly currentAnswer = computed(() => {
+		const index = this.currentQuestionIndex();
+		const answers = this.answers();
+		return answers[index] || null;
+	});
 
 	ngOnInit() {
 		this.testService.startTest();
