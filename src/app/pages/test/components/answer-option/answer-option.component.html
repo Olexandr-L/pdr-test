@@ -1,0 +1,4 @@
+<button matButton="outlined" [disabled]="isAnswered()" [ngClass]="btnClass()" class="option-button"
+    (click)="setAnswer.emit(optionIndex())">
+    {{ currentOption() }}
+</button>
