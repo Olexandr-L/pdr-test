@@ -1,7 +1,14 @@
+app-timer {
+    margin-bottom: 10px;
+}
+
 .answer-list {
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
+    border: 2px solid #ffd9e1;
+    padding: 10px;
+    border-radius: 12px;
     margin-bottom: 20px;
 
     .answer-item {

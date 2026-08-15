@@ -14,14 +14,16 @@ export class TestService {
 
     private testSize = signal<number>(DEFAULT_TEST_SIZE);
     private questions = signal<QuestionWithCategory[]>([]);
-    private currentQuestionIndex = signal<number>(0);
+
+    private _currentQuestionIndex = signal<number>(0);
+    public readonly currentQuestionIndex = computed(() => this._currentQuestionIndex());
 
     private _answers = signal<UserAnswer[]>([]);
-    public answers = computed(() => this._answers());
+    public readonly answers = computed(() => this._answers());
 
     public currentQuestion = computed(() => {
         const questions = this.questions();
-        const index = this.currentQuestionIndex();
+        const index = this._currentQuestionIndex();
         return questions[index] || null;
     });
 
@@ -31,7 +33,7 @@ export class TestService {
         
         console.log(answer, question?.answer);
 
-        answers[this.currentQuestionIndex()] = {
+        answers[this._currentQuestionIndex()] = {
             questionId: question?.id ?? 0,
             categoryId: question?.category ?? 0,
             answerIndex: answer,
@@ -42,11 +44,11 @@ export class TestService {
     }
 
     public nextQuestion() {
-        this.currentQuestionIndex.update((index) => index + 1);
+        this._currentQuestionIndex.update((index) => index + 1);
     }
 
     public updateCurrentQuestionIndex(index: number) {
-        this.currentQuestionIndex.set(index);
+        this._currentQuestionIndex.set(index);
     }
 
     public startTest() {
