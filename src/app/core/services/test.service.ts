@@ -1,8 +1,10 @@
 import { computed, inject, Injectable, signal } from '@angular/core';
-import { QuestionWithCategory, UserAnswer } from '../interfaces/questions.interfaces';
+import { QuestionWithCategory, TestData, UserAnswer } from '../interfaces/questions.interfaces';
 import { Store } from '@ngxs/store';
 import { QuestionsState } from '../storages/questions/questions.state';
 import { QuestionsActions } from '../storages/questions/questions.action';
+import { TestsActions } from '../storages/tests/tests.action';
+import { Router } from '@angular/router';
 
 const DEFAULT_TEST_SIZE = 20;
 
@@ -11,6 +13,7 @@ const DEFAULT_TEST_SIZE = 20;
 })
 export class TestService {
     private readonly store = inject(Store);
+    private readonly router = inject(Router);
 
     private testSize = signal<number>(DEFAULT_TEST_SIZE);
     private questions = signal<QuestionWithCategory[]>([]);
@@ -29,22 +32,46 @@ export class TestService {
 
     public setAnswer(answer: number) {
         const question = this.currentQuestion();
-        const answers = this.answers();
-        
-        console.log(answer, question?.answer);
+        const index = this._currentQuestionIndex();
 
-        answers[this._currentQuestionIndex()] = {
-            questionId: question?.id ?? 0,
-            categoryId: question?.category ?? 0,
-            answerIndex: answer,
-            isCorrect: question?.answer === answer,
-        };
+        this._answers.update(answers => {
+            const updatedAnswers = [...answers];
 
-        this._answers.set(answers);
+            updatedAnswers[index] = {
+                questionId: question?.id ?? 0,
+                categoryId: question?.category ?? 0,
+                answerIndex: answer,
+                isCorrect: question?.answer === answer,
+            };
+
+            return updatedAnswers;
+        });
     }
 
     public nextQuestion() {
-        this._currentQuestionIndex.update((index) => index + 1);
+        const answers = this.answers();
+        const currentIndex = this.currentQuestionIndex();
+
+        const nextUnanswered = answers.findIndex(
+            ({ answerIndex }, index) =>
+                index > currentIndex && answerIndex === undefined
+        );
+
+        if (nextUnanswered !== -1) {
+            this._currentQuestionIndex.set(nextUnanswered);
+            return;
+        }
+
+        const firstUnanswered = answers.findIndex(
+            ({ answerIndex }) => answerIndex === undefined
+        );
+
+        if (firstUnanswered !== -1) {
+            this._currentQuestionIndex.set(firstUnanswered);
+            return;
+        }
+
+        this.finishTest();
     }
 
     public updateCurrentQuestionIndex(index: number) {
@@ -53,11 +80,30 @@ export class TestService {
 
     public startTest() {
         this.testSize.set(DEFAULT_TEST_SIZE);
-        this._answers.set(new Array(DEFAULT_TEST_SIZE).fill({} as UserAnswer));
+        this._answers.set(
+            Array.from({ length: DEFAULT_TEST_SIZE }, () => ({} as UserAnswer))
+        );
 
         this.store.dispatch(new QuestionsActions.Load()).subscribe(() => {
             const questions = this.store.selectSnapshot(QuestionsState.getRandomQuestions(this.testSize()));
             this.questions.set(questions);
         });
+    }
+
+    public finishTest() {
+        const testData = this.getTestData();
+
+        this.store.dispatch(new TestsActions.Save(testData)).subscribe(() => {
+            this.router.navigateByUrl(`/result/${testData.id}`)
+        });
+    }
+
+    public getTestData(): TestData {
+        return {
+            id: new Date().getTime(),
+            questions: this.questions(),
+            answers: this.answers(),
+        };
+
     }
 }

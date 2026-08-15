@@ -47,7 +47,6 @@ export class TestComponent implements OnInit {
 	}
 
 	public onTimeEnd() {
-		// Handle time end event here
-		console.log('Time is up!');
+		this.testService.finishTest();
 	}
 }

@@ -1,4 +1,4 @@
-@for(answer of answers(); track answer; let idx = $index){
+@for(answer of answers(); track $index; let idx = $index){
     <button [matButton]="idx === currentQuestionIndex() ? 'filled' : 'outlined'" class="answer-item"
         (click)="setQuestionIndex.emit(idx)">
         @if(answer.isCorrect){

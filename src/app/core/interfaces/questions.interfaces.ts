@@ -26,3 +26,9 @@ export interface UserAnswer {
     answerIndex: number;
     isCorrect: boolean;
 }
+
+export interface TestData {
+    id: number;
+    questions: QuestionWithCategory[];
+    answers: UserAnswer[];
+}
