@@ -46,7 +46,7 @@ export class ResultListComponent {
 				id: test.id,
 				correctAnswers,
 				errors,
-				result: errors <= 2 ? 'Складено' : 'Не складено',
+				result: errors <= 2 ? 'Складено 🌞' : 'Не складено 😿',
 			};
 		});
 	});
