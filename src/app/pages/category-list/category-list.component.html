@@ -1,0 +1,3 @@
+@for (category of categories; track $index) {
+    <a matButton="filled" class="full-width" [routerLink]="['/category', category.id]">{{category.name}}</a>
+}

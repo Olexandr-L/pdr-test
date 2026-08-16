@@ -12,7 +12,7 @@ export class QuestionsService {
     private readonly http = inject(HttpClient);
 
     public loadQuestions(): Observable<QuestionWithCategory[]> {
-        const categoriesPaths = [...categories].map((cat) => cat.path);
+        const categoriesPaths = structuredClone(categories).map((cat) => cat.path);
 
         return forkJoin(
             categoriesPaths.map((path) =>
