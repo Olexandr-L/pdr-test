@@ -1,11 +1,11 @@
 import { ChangeDetectionStrategy, Component, computed, inject, OnInit, signal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
-import { AnswerOptionComponent } from '../test/components/answer-option/answer-option.component';
-import { QuestionSwitcherComponent } from '../test/components/question-switcher/question-switcher.component';
 import { Store } from '@ngxs/store';
 import { TestData } from '@app/core/interfaces/questions.interfaces';
 import { TestsState } from '@app/core/storages/tests/tests.state';
 import { ActivatedRoute } from '@angular/router';
+import { AnswerOptionComponent } from '@app/shared/components/answer-option/answer-option.component';
+import { QuestionSwitcherComponent } from '@app/shared/components/question-switcher/question-switcher.component';
 
 @Component({
 	selector: 'app-result',

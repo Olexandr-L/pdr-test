@@ -1,9 +1,9 @@
 import { ChangeDetectionStrategy, Component, computed, inject, OnInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { TestService } from '@app/core/services/test.service';
-import { TimerComponent } from './components/timer/timer.component';
-import { QuestionSwitcherComponent } from './components/question-switcher/question-switcher.component';
-import { AnswerOptionComponent } from './components/answer-option/answer-option.component';
+import { AnswerOptionComponent } from '@app/shared/components/answer-option/answer-option.component';
+import { QuestionSwitcherComponent } from '@app/shared/components/question-switcher/question-switcher.component';
+import { TimerComponent } from '@app/shared/components/timer/timer.component';
 
 @Component({
 	selector: 'app-test',
