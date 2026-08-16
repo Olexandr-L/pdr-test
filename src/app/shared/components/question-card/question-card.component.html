@@ -1,0 +1,15 @@
+<section class="question">
+    <div class="question-text">{{ question().question }}</div>
+
+    @if(question().image){
+        <img class="image" [src]="`./assets/images/${question().category}/${question().id}.jpg`"
+            alt="Question Image" />
+    }
+    <div class="options">
+        @for(option of options(); track $index){
+        <app-answer-option [index]="$index" [question]="question()" [currentAnswer]="answer()"
+            (setAnswer)="setAnswer.emit($event)" />
+        }
+    </div>
+
+</section>

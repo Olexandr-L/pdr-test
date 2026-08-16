@@ -1,13 +1,13 @@
 import { ChangeDetectionStrategy, Component, computed, inject, OnInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { TestService } from '@app/core/services/test.service';
-import { AnswerOptionComponent } from '@app/shared/components/answer-option/answer-option.component';
+import { QuestionCardComponent } from '@app/shared/components/question-card/question-card.component';
 import { QuestionSwitcherComponent } from '@app/shared/components/question-switcher/question-switcher.component';
 import { TimerComponent } from '@app/shared/components/timer/timer.component';
 
 @Component({
 	selector: 'app-test',
-	imports: [MatButtonModule, TimerComponent, QuestionSwitcherComponent, AnswerOptionComponent],
+	imports: [MatButtonModule, TimerComponent, QuestionSwitcherComponent, QuestionCardComponent],
 	templateUrl: './test.component.html',
 	styleUrl: './test.component.scss',
 	changeDetection: ChangeDetectionStrategy.OnPush,
@@ -17,13 +17,6 @@ export class TestComponent implements OnInit {
 
 	public currentQuestion = this.testService.currentQuestion;
 	public currentQuestionIndex = this.testService.currentQuestionIndex;
-
-	public options = computed(() => {
-		const question = this.currentQuestion();
-		if (!question) return [];
-
-		return ['1', '2', '3', '4', '5'].filter(key => !!question[key as keyof typeof question]);
-	});
 
 	public answers = this.testService.answers;
 

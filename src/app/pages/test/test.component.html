@@ -3,18 +3,4 @@
 <app-question-switcher [answers]="answers()" [currentQuestionIndex]="currentQuestionIndex()"
     (setQuestionIndex)="setQuestionIndex($event)" />
 
-<section class="question">
-    <div class="question-text">{{ currentQuestion()?.question }}</div>
-
-    @if(currentQuestion()?.image){
-    <img class="image" [src]="`./assets/images/${currentQuestion()?.category}/${currentQuestion()?.id}.jpg`"
-        alt="Question Image" />
-    }
-    <div class="options">
-        @for(option of options(); track $index){
-        <app-answer-option [index]="$index" [question]="currentQuestion()" [currentAnswer]="currentAnswer()"
-            (setAnswer)="onSetAnswer($event)" />
-        }
-    </div>
-
-</section>
+<app-question-card [question]="currentQuestion()" [answer]="currentAnswer()" (setAnswer)="onSetAnswer($event)"/>

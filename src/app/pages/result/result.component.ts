@@ -4,13 +4,13 @@ import { Store } from '@ngxs/store';
 import { TestData } from '@app/core/interfaces/questions.interfaces';
 import { TestsState } from '@app/core/storages/tests/tests.state';
 import { ActivatedRoute } from '@angular/router';
-import { AnswerOptionComponent } from '@app/shared/components/answer-option/answer-option.component';
 import { QuestionSwitcherComponent } from '@app/shared/components/question-switcher/question-switcher.component';
 import { SummaryComponent } from './components/summary/summary.component';
+import { QuestionCardComponent } from '@app/shared/components/question-card/question-card.component';
 
 @Component({
 	selector: 'app-result',
-	imports: [MatButtonModule, QuestionSwitcherComponent, AnswerOptionComponent, SummaryComponent],
+	imports: [MatButtonModule, QuestionSwitcherComponent, QuestionCardComponent, SummaryComponent],
 	templateUrl: './result.component.html',
 	styleUrl: './result.component.scss',
 	changeDetection: ChangeDetectionStrategy.OnPush,
