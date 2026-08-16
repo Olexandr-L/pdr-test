@@ -1,0 +1,10 @@
+<div class="title">
+    @if(mistakesAnswersCount() <= 2){ 
+        Іспит складено! 🌞 
+    } @else { 
+        Іспит не складено 😿
+    } 
+</div>
+
+<div>Правильні відповіді: {{correctAnswersCount()}}</div>
+<div>Помилки: {{mistakesAnswersCount()}}</div>

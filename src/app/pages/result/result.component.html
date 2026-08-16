@@ -1,3 +1,5 @@
+<app-summary [answers]="answers()"/>
+
 <app-question-switcher [answers]="answers()" [currentQuestionIndex]="currentQuestionIndex()"
     (setQuestionIndex)="setQuestionIndex($event)" />
 

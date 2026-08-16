@@ -6,10 +6,11 @@ import { TestsState } from '@app/core/storages/tests/tests.state';
 import { ActivatedRoute } from '@angular/router';
 import { AnswerOptionComponent } from '@app/shared/components/answer-option/answer-option.component';
 import { QuestionSwitcherComponent } from '@app/shared/components/question-switcher/question-switcher.component';
+import { SummaryComponent } from './components/summary/summary.component';
 
 @Component({
 	selector: 'app-result',
-	imports: [MatButtonModule, QuestionSwitcherComponent, AnswerOptionComponent],
+	imports: [MatButtonModule, QuestionSwitcherComponent, AnswerOptionComponent, SummaryComponent],
 	templateUrl: './result.component.html',
 	styleUrl: './result.component.scss',
 	changeDetection: ChangeDetectionStrategy.OnPush,

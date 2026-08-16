@@ -1,0 +1,14 @@
+:host {
+    display: block;
+    border: 2px solid #ffd9e1;
+    padding: 10px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+
+    .title {
+        text-align: center;
+        font-size: 18px;
+        font-weight: 600;
+        margin-bottom: 5px;
+    }
+}
