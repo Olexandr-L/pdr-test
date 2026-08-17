@@ -4,7 +4,6 @@ import { TestComponent } from './pages/test/test.component';
 import { ResultComponent } from './pages/result/result.component';
 import { ResultListComponent } from './pages/result-list/result-list.component';
 import { CategoryListComponent } from './pages/category-list/category-list.component';
-import { CategoryComponent } from './pages/category/category.component';
 
 export const routes: Routes = [
     {
@@ -25,7 +24,7 @@ export const routes: Routes = [
     },
     {
         path: 'category/:id',
-        component: CategoryComponent,
+        component: TestComponent,
     },
     {
         path: 'result',

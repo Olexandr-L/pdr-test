@@ -15,7 +15,6 @@ export class TestService {
     private readonly store = inject(Store);
     private readonly router = inject(Router);
 
-    private testSize = signal<number>(DEFAULT_TEST_SIZE);
     private questions = signal<QuestionWithCategory[]>([]);
 
     private _currentQuestionIndex = signal<number>(0);
@@ -78,14 +77,19 @@ export class TestService {
         this._currentQuestionIndex.set(index);
     }
 
-    public startTest() {
-        this.testSize.set(DEFAULT_TEST_SIZE);
-        this._answers.set(
-            Array.from({ length: DEFAULT_TEST_SIZE }, () => ({} as UserAnswer))
-        );
-
+    public startTest(categoryId?: number) {
         this.store.dispatch(new QuestionsActions.Load()).subscribe(() => {
-            const questions = this.store.selectSnapshot(QuestionsState.getRandomQuestions(this.testSize()));
+            let questions = [];
+            if (categoryId) {
+                questions = this.store.selectSnapshot(QuestionsState.getQuestionsByCategory(categoryId));
+            } else {
+                questions = this.store.selectSnapshot(QuestionsState.getRandomQuestions(DEFAULT_TEST_SIZE));
+            }
+
+            this._answers.set(
+                Array.from({ length: questions.length }, () => ({} as UserAnswer))
+            );
+
             this.questions.set(questions);
         });
     }

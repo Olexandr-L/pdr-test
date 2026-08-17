@@ -1,5 +1,6 @@
-import { ChangeDetectionStrategy, Component, computed, inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, OnInit, signal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
+import { ActivatedRoute } from '@angular/router';
 import { TestService } from '@app/core/services/test.service';
 import { QuestionCardComponent } from '@app/shared/components/question-card/question-card.component';
 import { QuestionSwitcherComponent } from '@app/shared/components/question-switcher/question-switcher.component';
@@ -14,6 +15,7 @@ import { TimerComponent } from '@app/shared/components/timer/timer.component';
 })
 export class TestComponent implements OnInit {
 	private readonly testService = inject(TestService);
+	private readonly activatedRoute = inject(ActivatedRoute);
 
 	public currentQuestion = this.testService.currentQuestion;
 	public currentQuestionIndex = this.testService.currentQuestionIndex;
@@ -26,8 +28,18 @@ export class TestComponent implements OnInit {
 		return answers[index] || null;
 	});
 
+	public readonly showTimer = signal<boolean>(true)
+
 	ngOnInit() {
-		this.testService.startTest();
+		const id = this.activatedRoute.snapshot.params['id'];
+
+		if (id) {
+			this.showTimer.set(false);
+			this.testService.startTest(+id);
+		} else {
+			this.showTimer.set(true);
+			this.testService.startTest();
+		}
 	}
 
 	public onSetAnswer(answer: number) {
