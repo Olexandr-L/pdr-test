@@ -1,0 +1,6 @@
+<app-timer [minutes]="20" (timeEnd)="onTimeEnd()" />
+
+<app-question-switcher [answers]="answers()" [currentQuestionIndex]="currentQuestionIndex()"
+    (setQuestionIndex)="setQuestionIndex($event)" />
+
+<app-question-card [question]="currentQuestion()" [answer]="currentAnswer()" (setAnswer)="onSetAnswer($event)" />

@@ -1,0 +1,16 @@
+<table mat-table [dataSource]="tableData()" class="mat-shadow-2">
+    @for (column of columns; track column) {
+    <ng-container [matColumnDef]="column.columnDef">
+        <th mat-header-cell *matHeaderCellDef>
+            {{column.header}}
+        </th>
+        <td mat-cell *matCellDef="let row">
+            {{column.cell(row)}}
+        </td>
+    </ng-container>
+    }
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr class="table-row" mat-row *matRowDef="let row; columns: displayedColumns;" [routerLink]="['/result', row.id]">
+    </tr>
+</table>
