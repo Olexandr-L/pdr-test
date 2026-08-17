@@ -1,3 +1,9 @@
 @for (category of categories; track $index) {
-    <a matButton="filled" class="full-width" [routerLink]="['/category', category.id]">{{category.name}}</a>
+    <div class="category">
+        <div class="title">{{category.name}}</div>
+        <div class="btns">
+            <a matButton="filled" class="full-width" [routerLink]="['/test', category.id]">Іспит</a>
+            <a matButton="filled" class="full-width" [routerLink]="['/category', category.id]">Усі питання</a>
+        </div>
+    </div>
 }

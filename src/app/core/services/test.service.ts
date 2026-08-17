@@ -77,11 +77,11 @@ export class TestService {
         this._currentQuestionIndex.set(index);
     }
 
-    public startTest(categoryId?: number) {
+    public startTest(categoryId?: number, full?: boolean) {
         this.store.dispatch(new QuestionsActions.Load()).subscribe(() => {
             let questions = [];
             if (categoryId) {
-                questions = this.store.selectSnapshot(QuestionsState.getQuestionsByCategory(categoryId));
+                questions = this.store.selectSnapshot(QuestionsState.getQuestionsByCategory(categoryId, full ? undefined : DEFAULT_TEST_SIZE));
             } else {
                 questions = this.store.selectSnapshot(QuestionsState.getRandomQuestions(DEFAULT_TEST_SIZE));
             }

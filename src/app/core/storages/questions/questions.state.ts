@@ -24,9 +24,15 @@ export class QuestionsState {
         return state.length;
     }
 
-    static getQuestionsByCategory(category: number) {
+    static getQuestionsByCategory(category: number, size?: number) {
         return createSelector([QuestionsState], (state: QuestionWithCategory[]) => {
-            return state.filter(question => question.category === category);
+            const shuffled = [...(state ?? [])].sort(() => 0.5 - Math.random());
+            const filtered = shuffled.filter(question => question.category === category);
+
+            if (size) {
+                return filtered.slice(0, size);
+            }
+            return filtered;
         });
     }
 
