@@ -8,5 +8,10 @@ export const categories = [
         id: 2,
         path: 'assets/questions/rightsAndObligations.json',
         name: 'Обов\'язки і права водіїв механічних транспортних засобів',
+    },
+    {
+        id: 3,
+        path: 'assets/questions/vehiclesWithSpecialSignals.json',
+        name: 'Рух транспортних засобів із спеціальними сигналами',
     }
 ]
