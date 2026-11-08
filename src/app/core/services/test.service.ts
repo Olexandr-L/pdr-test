@@ -1,5 +1,7 @@
 import { computed, inject, Injectable, signal } from '@angular/core';
-import { QuestionWithCategory, TestData, TestMode, UserAnswer } from '../interfaces/questions.interfaces';
+import { QuestionWithCategory, TestData, TestMode, TestProgress, UserAnswer } from '../interfaces/questions.interfaces';
+import { ProgressActions } from '../storages/progress/progress.action';
+import { ProgressState } from '../storages/progress/progress.state';
 import { Store } from '@ngxs/store';
 import { QuestionsState } from '../storages/questions/questions.state';
 import { QuestionsActions } from '../storages/questions/questions.action';
@@ -63,7 +65,10 @@ export class TestService {
 
         if (this.isExam() && countMistakes(this._answers()) > EXAM_MAX_MISTAKES) {
             this.finishTest();
+            return;
         }
+
+        this.saveProgress();
     }
 
     public nextQuestion() {
@@ -79,14 +84,14 @@ export class TestService {
         );
 
         if (nextUnanswered !== -1) {
-            this._currentQuestionIndex.set(nextUnanswered);
+            this.updateCurrentQuestionIndex(nextUnanswered);
             return;
         }
 
         const firstUnanswered = answers.findIndex((answer) => !isAnswered(answer));
 
         if (firstUnanswered !== -1) {
-            this._currentQuestionIndex.set(firstUnanswered);
+            this.updateCurrentQuestionIndex(firstUnanswered);
             return;
         }
 
@@ -95,6 +100,7 @@ export class TestService {
 
     public updateCurrentQuestionIndex(index: number) {
         this._currentQuestionIndex.set(index);
+        this.saveProgress();
     }
 
     public startTest(mode: TestMode, categoryId?: number) {
@@ -107,6 +113,11 @@ export class TestService {
         this._currentQuestionIndex.set(0);
 
         this.store.dispatch(new QuestionsActions.Load()).subscribe(() => {
+            if (this.restoreProgress()) {
+                this._loaded.set(true);
+                return;
+            }
+
             const questions = this.selectQuestions(mode, categoryId);
 
             this._answers.set(
@@ -122,6 +133,8 @@ export class TestService {
             return;
         }
         this.finished = true;
+
+        this.clearProgress();
 
         const testData = this.getTestData();
 
@@ -155,6 +168,95 @@ export class TestService {
             questions,
             answers,
         };
+    }
+
+    /** Прогрес зберігаємо лише для «Усі питання» по темі: іспит має таймер і проходиться за раз. */
+    private get progressCategoryId(): number | undefined {
+        return this._mode() === 'learning' ? this.categoryId() : undefined;
+    }
+
+    private saveProgress() {
+        const categoryId = this.progressCategoryId;
+
+        if (this.finished || categoryId === undefined || !this._loaded()) {
+            return;
+        }
+
+        // Поки немає жодної відповіді — зберігати нічого (і нема чого продовжувати).
+        if (!this._answers().some(isAnswered)) {
+            this.clearProgress();
+            return;
+        }
+
+        const progress: TestProgress = {
+            categoryId,
+            questionIds: this.questions().map((question) => question.id),
+            answers: this._answers(),
+            currentQuestionIndex: this._currentQuestionIndex(),
+            updatedAt: Date.now(),
+        };
+
+        this.store.dispatch(new ProgressActions.Save(progress));
+    }
+
+    private clearProgress() {
+        const categoryId = this.progressCategoryId;
+
+        if (categoryId !== undefined) {
+            this.store.dispatch(new ProgressActions.Clear(categoryId));
+        }
+    }
+
+    /** Відновлює незавершене проходження теми. Повертає false, якщо відновлювати нічого. */
+    private restoreProgress(): boolean {
+        const categoryId = this.progressCategoryId;
+
+        if (categoryId === undefined) {
+            return false;
+        }
+
+        const progress = this.store.selectSnapshot(ProgressState.getByCategory(categoryId));
+
+        if (!progress) {
+            return false;
+        }
+
+        const categoryQuestions = this.store.selectSnapshot(QuestionsState.getByCategory(categoryId));
+        const byId = new Map(categoryQuestions.map((question) => [question.id, question]));
+
+        const questions: QuestionWithCategory[] = [];
+        const answers: UserAnswer[] = [];
+        let currentQuestionIndex = 0;
+
+        // Питання, яких уже немає в базі, відкидаємо; індекс поточного зсуваємо відповідно.
+        progress.questionIds.forEach((id, index) => {
+            const question = byId.get(id);
+            if (!question) {
+                return;
+            }
+            if (index <= progress.currentQuestionIndex) {
+                currentQuestionIndex = questions.length;
+            }
+            questions.push(question);
+            answers.push(progress.answers[index] ?? ({} as UserAnswer));
+            byId.delete(id);
+        });
+
+        // Нові питання, що з'явились у темі після збереження, — в кінець.
+        const added = shuffle([...byId.values()]);
+        questions.push(...added);
+        answers.push(...added.map(() => ({} as UserAnswer)));
+
+        if (!answers.some(isAnswered)) {
+            this.clearProgress();
+            return false;
+        }
+
+        this.questions.set(questions);
+        this._answers.set(answers);
+        this._currentQuestionIndex.set(currentQuestionIndex);
+
+        return true;
     }
 
     private selectQuestions(mode: TestMode, categoryId?: number): QuestionWithCategory[] {

@@ -43,3 +43,14 @@ export interface QuestionRef {
     categoryId: number;
     questionId: number;
 }
+
+/** Незавершене проходження «Усі питання» по темі. */
+export interface TestProgress {
+    categoryId: number;
+    /** Порядок питань (після перемішування), щоб відновити його як був. */
+    questionIds: number[];
+    /** Вирівняно з questionIds; для питань без відповіді — порожній об'єкт. */
+    answers: UserAnswer[];
+    currentQuestionIndex: number;
+    updatedAt: number;
+}

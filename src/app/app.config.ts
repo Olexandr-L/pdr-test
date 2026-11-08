@@ -9,14 +9,15 @@ import { provideStore } from '@ngxs/store';
 import { provideHttpClient } from '@angular/common/http';
 import { QuestionsState } from './core/storages/questions/questions.state';
 import { TestsState } from './core/storages/tests/tests.state';
+import { ProgressState } from './core/storages/progress/progress.state';
 
 export const appConfig: ApplicationConfig = {
     providers: [
         provideBrowserGlobalErrorListeners(),
         provideRouter(routes),
         provideStore(
-            [QuestionsState, TestsState],
-            withNgxsStoragePlugin({ keys: [TestsState] }),
+            [QuestionsState, TestsState, ProgressState],
+            withNgxsStoragePlugin({ keys: [TestsState, ProgressState] }),
         ),
         provideHttpClient(),
         {

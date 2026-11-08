@@ -1,9 +1,16 @@
 @for (category of categories; track $index) {
+    @let categoryProgress = progress()[category.id];
     <div class="category">
         <div class="title">{{category.name}}</div>
         <div class="btns">
             <a matButton="outlined" class="full-width" [routerLink]="['/test', category.id]">Іспит</a>
-            <a matButton="outlined" class="full-width" [routerLink]="['/category', category.id]">Усі питання</a>
+            <a matButton="outlined" class="full-width" [routerLink]="['/category', category.id]">
+                @if (categoryProgress) {
+                    Продовжити · {{answeredCount(categoryProgress)}}/{{categoryProgress.questionIds.length}}
+                } @else {
+                    Усі питання
+                }
+            </a>
         </div>
     </div>
 }
