@@ -1,0 +1,19 @@
+@if (crumbs().length) {
+    <nav aria-label="Навігація">
+        <ol class="trail">
+            @for (crumb of crumbs(); track $index; let last = $last) {
+                <li>
+                    @if (crumb.link && !last) {
+                        <a [routerLink]="crumb.link">{{ crumb.label }}</a>
+                    } @else {
+                        <span aria-current="page">{{ crumb.label }}</span>
+                    }
+                </li>
+            }
+        </ol>
+
+        @if (parent(); as parent) {
+            <a class="back" matButton [routerLink]="parent.link">‹ {{ parent.label }}</a>
+        }
+    </nav>
+}

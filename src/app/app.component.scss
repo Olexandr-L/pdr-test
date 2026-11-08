@@ -10,7 +10,6 @@
     mat-toolbar {
         max-width: 880px;
         margin: 0 auto;
-        gap: 8px;
         min-height: 64px;
         height: auto;
         padding-block: 8px;
@@ -44,10 +43,6 @@
     font-weight: 700;
     line-height: 1.25;
     letter-spacing: -0.01em;
-}
-
-.spacer {
-    flex: 1 1 auto;
 }
 
 .content {
