@@ -10,9 +10,11 @@
         <app-question-card [question]="currentQuestion()" [answer]="currentAnswer()" [reveal]="!isExam()"
             (setAnswer)="onSetAnswer($event)" />
 
-        <div class="actions">
-            <button matButton="outlined" (click)="onFinish()">Завершити</button>
-        </div>
+        @if (mode() !== 'mistakes') {
+            <div class="actions">
+                <button matButton="outlined" (click)="onFinish()">Завершити</button>
+            </div>
+        }
     } @else {
         <div class="empty">
             @if (mode() === 'mistakes') {
