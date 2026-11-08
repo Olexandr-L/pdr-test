@@ -1,10 +1,14 @@
-@for(answer of answers(); track $index; let idx = $index){
-    <button [matButton]="buttonAppearance(idx)" class="answer-item" (click)="setQuestionIndex.emit(idx)">
-        @if(reveal()){
-            @if(answer.isCorrect){
-            ✅
-            } @else if(answer.isCorrect === false){
-            ❌
+@for (answer of answers(); track $index; let idx = $index) {
+    <button [matButton]="buttonAppearance(idx)" #item class="answer-item"
+        [class.correct]="reveal() && answer.isCorrect === true && idx !== currentQuestionIndex()"
+        [class.wrong]="reveal() && answer.isCorrect === false && idx !== currentQuestionIndex()"
+        (click)="setQuestionIndex.emit(idx)">
+        {{ idx + 1 }}
+        @if (reveal()) {
+            @if (answer.isCorrect) {
+                <span class="status">✅</span>
+            } @else if (answer.isCorrect === false) {
+                <span class="status">❌</span>
             }
         }
     </button>

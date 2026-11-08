@@ -1,28 +1,67 @@
+/* A single horizontally scrollable row: swipe on touch screens, drag / wheel with a mouse. */
 :host {
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     gap: 8px;
     padding: 12px;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scrollbar-width: none;
     border: 1px solid var(--app-border-color);
     border-radius: var(--app-radius);
     background: var(--app-card-bg);
     box-shadow: var(--app-shadow);
+    cursor: grab;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
+
+    &.dragging {
+        cursor: grabbing;
+        user-select: none;
+
+        .answer-item {
+            pointer-events: none;
+        }
+    }
 
     .answer-item {
         --mat-button-filled-container-shape: 10px;
         --mat-button-outlined-container-shape: 10px;
         --mat-button-tonal-container-shape: 10px;
 
-        padding: 0px;
-        width: 34px;
-        height: 34px;
-        min-width: 34px;
-        min-height: 34px;
-        font-size: 14px;
+        flex-shrink: 0;
+        padding: 0 4px;
+        min-width: 38px;
+        height: 38px;
+        min-height: 38px;
+        font-size: 13px;
+        font-weight: 600;
         transition: transform var(--app-transition);
 
         &:hover {
             transform: translateY(-1px);
+        }
+
+        &.correct {
+            --mat-button-outlined-outline-color: #66bb6a;
+            --mat-button-outlined-label-text-color: #2e7d32;
+            background-color: #e8f5e9;
+        }
+
+        &.wrong {
+            --mat-button-outlined-outline-color: #ef5350;
+            --mat-button-outlined-label-text-color: #c62828;
+            background-color: #ffebee;
+        }
+
+        .status {
+            position: absolute;
+            top: 1px;
+            right: 2px;
+            font-size: 8px;
+            line-height: 1;
         }
     }
 }
