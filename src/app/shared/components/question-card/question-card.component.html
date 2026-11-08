@@ -12,5 +12,24 @@
                     [reveal]="reveal()" [readonly]="readonly()" (choose)="setAnswer.emit($event)" />
             }
         </div>
+
+        @if (showExplanation()) {
+            <div class="explanation" [class.is-correct]="answer()?.isCorrect" [class.is-incorrect]="!answer()?.isCorrect"
+                role="status">
+                <div class="explanation-title">
+                    {{ answer()?.isCorrect ? 'Правильно' : 'Неправильно' }}
+                </div>
+
+                @if (!answer()?.isCorrect && correctOption(); as correct) {
+                    <p class="explanation-correct">
+                        Правильна відповідь: <strong>{{ correct.number }}. {{ correct.text }}</strong>
+                    </p>
+                }
+
+                @if (question.explanation) {
+                    <p class="explanation-text">{{ question.explanation }}</p>
+                }
+            </div>
+        }
     </section>
 }

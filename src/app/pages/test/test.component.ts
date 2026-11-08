@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, OnInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, RouterLink } from '@angular/router';
@@ -42,9 +42,15 @@ export class TestComponent implements OnInit {
 		this.testService.startTest(mode, id ? +id : undefined);
 	}
 
+	public readonly hasUnanswered = computed(() => this.answers().some((answer) => !isAnswered(answer)));
+
+	/** Outside an exam the user stays on the question to read the explanation and moves on with "Далі". */
 	public onSetAnswer(answer: number) {
 		this.testService.setAnswer(answer);
-		this.testService.nextQuestion();
+
+		if (this.isExam()) {
+			this.testService.nextQuestion();
+		}
 	}
 
 	public setQuestionIndex(index: number) {

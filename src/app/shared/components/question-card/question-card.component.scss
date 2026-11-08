@@ -33,3 +33,31 @@
     gap: 10px;
     flex-direction: column;
 }
+
+.explanation {
+    --explanation-accent: #4caf50;
+
+    margin-top: 18px;
+    padding: 14px 18px;
+    border-left: 4px solid var(--explanation-accent);
+    border-radius: 14px;
+    background: color-mix(in srgb, var(--explanation-accent) 10%, var(--app-card-bg));
+    line-height: 1.5;
+
+    &.is-incorrect {
+        --explanation-accent: #f44336;
+    }
+
+    p {
+        margin: 8px 0 0;
+    }
+}
+
+.explanation-title {
+    font-weight: 700;
+    color: var(--explanation-accent);
+}
+
+.explanation-text {
+    white-space: pre-line;
+}

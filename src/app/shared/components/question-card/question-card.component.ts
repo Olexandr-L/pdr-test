@@ -4,6 +4,7 @@ import {
     QuestionWithCategory,
     UserAnswer,
 } from '@app/core/interfaces/questions.interfaces';
+import { isAnswered } from '@app/core/utils/test.utils';
 import { AnswerOptionComponent, AnswerOptionView } from '../answer-option/answer-option.component';
 
 const OPTION_KEYS: QuestionOptionsKeys[] = ['1', '2', '3', '4', '5'];
@@ -22,8 +23,17 @@ export class QuestionCardComponent {
     public readonly reveal = input<boolean>(true);
     /** Result review: answering is disabled, the correct answer is shown even for skipped questions. */
     public readonly readonly = input<boolean>(false);
+    /** Show the explanation block once the question is answered. */
+    public readonly explain = input<boolean>(false);
 
     public readonly setAnswer = output<number>();
+
+    public readonly showExplanation = computed(() => this.explain() && isAnswered(this.answer()));
+
+    public readonly correctOption = computed(() => {
+        const correct = this.question()?.answer;
+        return this.options().find((option) => option.number === correct) ?? null;
+    });
 
     public readonly options = computed<AnswerOptionView[]>(() => {
         const question = this.question();

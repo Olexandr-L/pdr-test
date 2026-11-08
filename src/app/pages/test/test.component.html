@@ -8,11 +8,11 @@
             [reveal]="!isExam()" (setQuestionIndex)="setQuestionIndex($event)" />
 
         <app-question-card [question]="currentQuestion()" [answer]="currentAnswer()" [reveal]="!isExam()"
-            (setAnswer)="onSetAnswer($event)" />
+            [explain]="!isExam()" (setAnswer)="onSetAnswer($event)" />
 
         <div class="actions">
             <button matButton="outlined" [disabled]="currentQuestionIndex() === 0" (click)="onPrev()">‹ Назад</button>
-            @if (mode() !== 'mistakes') {
+            @if (mode() !== 'mistakes' || !hasUnanswered()) {
                 <button matButton="outlined" (click)="onFinish()">Завершити</button>
             }
             <button matButton="outlined" [disabled]="currentQuestionIndex() >= questionsCount() - 1"

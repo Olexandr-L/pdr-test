@@ -9,6 +9,8 @@ export interface Question extends QuestionOptions {
     question: string;
     image: boolean;
     answer: number | null;
+    /** Explanation shown after answering outside an exam. Optional: not every question has one. */
+    explanation?: string;
 }
 
 export interface QuestionWithCategory extends Question {
