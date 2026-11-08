@@ -1,0 +1,11 @@
+@for(answer of answers(); track $index; let idx = $index){
+    <button [matButton]="buttonAppearance(idx)" class="answer-item" (click)="setQuestionIndex.emit(idx)">
+        @if(reveal()){
+            @if(answer.isCorrect){
+            ✅
+            } @else if(answer.isCorrect === false){
+            ❌
+            }
+        }
+    </button>
+}

@@ -1,0 +1,18 @@
+:host {
+	display: block;
+	padding: 14px 18px 18px;
+	border: 1px solid var(--app-border-color);
+	border-radius: var(--app-radius);
+	background: var(--app-card-bg);
+	box-shadow: var(--app-shadow);
+}
+
+.timer-display {
+	text-align: center;
+	margin-bottom: 12px;
+	font-size: 28px;
+	font-weight: 800;
+	letter-spacing: -0.02em;
+	font-variant-numeric: tabular-nums;
+	color: var(--mat-sys-primary);
+}

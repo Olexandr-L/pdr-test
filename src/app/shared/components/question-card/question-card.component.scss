@@ -1,0 +1,35 @@
+:host {
+  display: block;
+}
+
+.question {
+    padding: 20px;
+    border: 1px solid var(--app-border-color);
+    border-radius: var(--app-radius);
+    background: var(--app-card-bg);
+    box-shadow: var(--app-shadow);
+}
+
+.question-text {
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 1.45;
+    letter-spacing: -0.01em;
+    margin-bottom: 18px;
+}
+
+.image {
+    display: block;
+    width: 100%;
+    max-width: 480px;
+    height: auto;
+    margin: 0 auto 18px;
+    border-radius: 14px;
+    box-shadow: var(--app-shadow);
+}
+
+.options {
+    display: flex;
+    gap: 10px;
+    flex-direction: column;
+}

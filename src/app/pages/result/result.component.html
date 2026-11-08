@@ -1,0 +1,10 @@
+@if (testData; as test) {
+    <app-summary [test]="test" />
+
+    <app-question-switcher [answers]="answers" [currentQuestionIndex]="currentQuestionIndex()"
+        (setQuestionIndex)="setQuestionIndex($event)" />
+
+    <app-question-card [question]="currentQuestion()" [answer]="currentAnswer()" [readonly]="true" />
+} @else {
+    <p class="empty">Результат не знайдено.</p>
+}

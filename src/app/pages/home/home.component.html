@@ -1,0 +1,45 @@
+<section class="hero">
+    <h1>Привіт! 👋</h1>
+    <p>Обирай режим і готуйся до іспиту.</p>
+</section>
+
+<nav class="menu">
+    <a class="tile primary" routerLink="/test">
+        <span class="icon" aria-hidden="true">📝</span>
+        <span class="text">
+            <span class="label">Почати іспит</span>
+            <span class="hint">{{ examSize }} питань · {{ examMinutes }} хвилин</span>
+        </span>
+    </a>
+    <a class="tile" routerLink="/category-list">
+        <span class="icon" aria-hidden="true">📚</span>
+        <span class="text">
+            <span class="label">Тести по темах</span>
+            <span class="hint">Усі питання за розділами</span>
+        </span>
+    </a>
+    <a class="tile" [routerLink]="mistakesCount() ? '/mistakes' : null" [class.disabled]="!mistakesCount()"
+        [attr.aria-disabled]="!mistakesCount()">
+        <span class="icon" aria-hidden="true">🎯</span>
+        <span class="text">
+            <span class="label">Робота над помилками</span>
+            <span class="hint">
+                @if (mistakesCount()) {
+                    Питань для повторення: {{ mistakesCount() }}
+                } @else {
+                    Помилок немає 🌞
+                }
+            </span>
+        </span>
+        @if (mistakesCount()) {
+            <span class="badge">{{ mistakesCount() }}</span>
+        }
+    </a>
+    <a class="tile" routerLink="/result">
+        <span class="icon" aria-hidden="true">📊</span>
+        <span class="text">
+            <span class="label">Мої результати</span>
+            <span class="hint">Історія спроб</span>
+        </span>
+    </a>
+</nav>

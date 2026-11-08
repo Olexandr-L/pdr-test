@@ -1,0 +1,31 @@
+@if (loaded()) {
+    @if (questionsCount()) {
+        @if (isExam()) {
+            <app-timer [minutes]="examMinutes" (timeEnd)="onTimeEnd()" />
+        }
+
+        <app-question-switcher [answers]="answers()" [currentQuestionIndex]="currentQuestionIndex()"
+            [reveal]="!isExam()" (setQuestionIndex)="setQuestionIndex($event)" />
+
+        <app-question-card [question]="currentQuestion()" [answer]="currentAnswer()" [reveal]="!isExam()"
+            (setAnswer)="onSetAnswer($event)" />
+
+        <div class="actions">
+            <button matButton="outlined" [disabled]="currentQuestionIndex() === 0" (click)="onPrev()">‹ Назад</button>
+            @if (mode() !== 'mistakes') {
+                <button matButton="outlined" (click)="onFinish()">Завершити</button>
+            }
+            <button matButton="outlined" [disabled]="currentQuestionIndex() >= questionsCount() - 1"
+                (click)="onNext()">Далі ›</button>
+        </div>
+    } @else {
+        <div class="empty">
+            @if (mode() === 'mistakes') {
+                <p>Помилок немає 🌞</p>
+            } @else {
+                <p>Питань не знайдено.</p>
+            }
+            <a matButton="outlined" routerLink="/">На головну</a>
+        </div>
+    }
+}

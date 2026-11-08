@@ -1,0 +1,28 @@
+:host {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 12px;
+    border: 1px solid var(--app-border-color);
+    border-radius: var(--app-radius);
+    background: var(--app-card-bg);
+    box-shadow: var(--app-shadow);
+
+    .answer-item {
+        --mat-button-filled-container-shape: 10px;
+        --mat-button-outlined-container-shape: 10px;
+        --mat-button-tonal-container-shape: 10px;
+
+        padding: 0px;
+        width: 34px;
+        height: 34px;
+        min-width: 34px;
+        min-height: 34px;
+        font-size: 14px;
+        transition: transform var(--app-transition);
+
+        &:hover {
+            transform: translateY(-1px);
+        }
+    }
+}

@@ -1,0 +1,51 @@
+:host {
+    display: block;
+    width: 100%;
+}
+
+.option-button {
+    --mat-button-outlined-outline-color: var(--app-border-color);
+    --mat-button-outlined-label-text-weight: 500;
+
+    min-height: 52px;
+    height: auto;
+    width: 100%;
+    padding: 12px 18px;
+    line-height: 1.4;
+    white-space: normal;
+    text-align: left;
+    justify-content: flex-start;
+    background-color: var(--app-card-bg);
+    box-shadow: var(--app-shadow);
+    transition: background-color var(--app-transition), border-color var(--app-transition),
+        transform var(--app-transition), box-shadow var(--app-transition);
+
+    &:not(:disabled):hover {
+        transform: translateY(-1px);
+        box-shadow: var(--app-shadow-hover);
+        border-color: var(--mat-sys-primary);
+    }
+
+    &.correct {
+        background-color: #4caf50;
+        border-color: #4caf50;
+        color: #fff;
+    }
+
+    &.incorrect {
+        background-color: #f44336;
+        border-color: #f44336;
+        color: #fff;
+    }
+
+    &.help {
+        background-color: #c8e6c9;
+        border-color: #81c784;
+    }
+
+    &.selected {
+        background-color: var(--mat-sys-secondary-container);
+        color: var(--mat-sys-on-secondary-container);
+        border-color: var(--mat-sys-secondary);
+    }
+}
