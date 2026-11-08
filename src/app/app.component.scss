@@ -16,6 +16,15 @@
     }
 }
 
+// Breadcrumbs live inside the sticky header so they stay visible while scrolling,
+// whatever height the (wrapping) title gives the toolbar.
+.header-crumbs {
+    max-width: 880px;
+    margin: 0 auto;
+    padding-inline: 16px;
+    box-sizing: border-box;
+}
+
 .brand {
     display: flex;
     align-items: center;
