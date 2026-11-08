@@ -11,5 +11,5 @@ import { categories } from '@app/core/maps/categories.map';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CategoryListComponent {
-    public readonly categories = structuredClone(categories);
+    public readonly categories = categories;
 }

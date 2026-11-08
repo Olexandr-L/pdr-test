@@ -1,4 +1,4 @@
-<button matButton="outlined" [disabled]="isDisabled()" [ngClass]="btnClass()" class="option-button"
-    (click)="setAnswer.emit(optionIndex())">
-    {{ currentOption() }}
+<button matButton="outlined" [disabled]="isDisabled()" [class]="state()" class="option-button"
+    (click)="choose.emit(option().number)">
+    {{ option().text }}
 </button>

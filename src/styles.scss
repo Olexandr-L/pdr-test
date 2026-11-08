@@ -17,6 +17,9 @@ html {
   @include mat.toolbar-overrides((container-background-color: var(--mat-sys-primary-container),
       container-text-color: var(--mat-sys-primary),
     ));
+
+  // Рамка для блоків-карток (таймер, сітка питань, підсумок, теми).
+  --app-border-color: #ffd9e1;
 }
 
 body {

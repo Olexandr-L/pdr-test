@@ -6,7 +6,7 @@ import { QuestionsActions } from '../storages/questions/questions.action';
 import { TestsActions } from '../storages/tests/tests.action';
 import { TestsState } from '../storages/tests/tests.state';
 import { Router } from '@angular/router';
-import { countMistakes, EXAM_MAX_MISTAKES, EXAM_SIZE, isAnswered, isExamMode } from '../utils/test.utils';
+import { countMistakes, EXAM_MAX_MISTAKES, EXAM_SIZE, isAnswered, isExamMode, shuffle } from '../utils/test.utils';
 
 @Injectable({
     providedIn: 'root',
@@ -35,11 +35,9 @@ export class TestService {
 
     public readonly questionsCount = computed(() => this.questions().length);
 
-    public currentQuestion = computed(() => {
-        const questions = this.questions();
-        const index = this._currentQuestionIndex();
-        return questions[index] || null;
-    });
+    public readonly currentQuestion = computed(() => this.questions()[this._currentQuestionIndex()] ?? null);
+
+    public readonly currentAnswer = computed(() => this._answers()[this._currentQuestionIndex()] ?? null);
 
     public setAnswer(answer: number) {
         const question = this.currentQuestion();
@@ -160,16 +158,19 @@ export class TestService {
     }
 
     private selectQuestions(mode: TestMode, categoryId?: number): QuestionWithCategory[] {
+        const byCategory = () =>
+            categoryId === undefined ? [] : this.store.selectSnapshot(QuestionsState.getByCategory(categoryId));
+
         switch (mode) {
             case 'exam':
-                return this.store.selectSnapshot(QuestionsState.getRandomQuestions(EXAM_SIZE));
+                return shuffle(this.store.selectSnapshot(QuestionsState.getAll)).slice(0, EXAM_SIZE);
             case 'categoryExam':
-                return this.store.selectSnapshot(QuestionsState.getQuestionsByCategory(categoryId!, EXAM_SIZE));
+                return shuffle(byCategory()).slice(0, EXAM_SIZE);
             case 'learning':
-                return this.store.selectSnapshot(QuestionsState.getQuestionsByCategory(categoryId!));
+                return shuffle(byCategory());
             case 'mistakes': {
                 const refs = this.store.selectSnapshot(TestsState.getMistakes);
-                return this.store.selectSnapshot(QuestionsState.getQuestionsByRefs(refs));
+                return shuffle(this.store.selectSnapshot(QuestionsState.getByRefs(refs)));
             }
         }
     }

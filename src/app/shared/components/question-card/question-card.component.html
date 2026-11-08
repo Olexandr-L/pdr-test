@@ -1,15 +1,15 @@
-@if(question()){
+@if (question(); as question) {
     <section class="question">
-        <div class="question-text">{{ question().question }}</div>
+        <div class="question-text">{{ question.question }}</div>
 
-        @if(question().image){
-            <img class="image" [src]="`./assets/images/${question().category}/${question().id}.jpg`"
-                alt="Question Image" />
+        @if (question.image) {
+            <img class="image" [src]="`./assets/images/${question.category}/${question.id}.jpg`"
+                alt="Ілюстрація до питання" />
         }
         <div class="options">
-            @for(option of options(); track $index){
-            <app-answer-option [index]="$index" [question]="question()" [currentAnswer]="answer()"
-                [reveal]="reveal()" [readonly]="readonly()" (setAnswer)="setAnswer.emit($event)" />
+            @for (option of options(); track option.number) {
+                <app-answer-option [option]="option" [correctNumber]="question.answer" [answer]="answer()"
+                    [reveal]="reveal()" [readonly]="readonly()" (choose)="setAnswer.emit($event)" />
             }
         </div>
     </section>

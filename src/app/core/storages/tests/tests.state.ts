@@ -22,19 +22,13 @@ export class TestsState {
     }
 
     static getTestById(id: number) {
-        return createSelector([TestsState], (state: TestData[]) => {
-            return state.filter(test => test.id === id)[0];
-        });
+        return createSelector([TestsState], (state: TestData[]) =>
+            state.find(test => test.id === id) ?? null
+        );
     }
 
-
     @Action(TestsActions.Save)
-    saveTest(ctx: StateContext<TestData[]>, action: TestsActions.Save) {
-        const state = ctx.getState();
-
-        ctx.setState([
-            ...state,
-            action.test,
-        ])
+    saveTest({ getState, setState }: StateContext<TestData[]>, { test }: TestsActions.Save) {
+        setState([...getState(), test]);
     }
 }

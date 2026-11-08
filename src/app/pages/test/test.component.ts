@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, RouterLink } from '@angular/router';
@@ -30,16 +30,10 @@ export class TestComponent implements OnInit {
 	public readonly loaded = this.testService.loaded;
 	public readonly questionsCount = this.testService.questionsCount;
 
-	public currentQuestion = this.testService.currentQuestion;
-	public currentQuestionIndex = this.testService.currentQuestionIndex;
-
-	public answers = this.testService.answers;
-
-	public readonly currentAnswer = computed(() => {
-		const index = this.currentQuestionIndex();
-		const answers = this.answers();
-		return answers[index] || null;
-	});
+	public readonly currentQuestion = this.testService.currentQuestion;
+	public readonly currentQuestionIndex = this.testService.currentQuestionIndex;
+	public readonly currentAnswer = this.testService.currentAnswer;
+	public readonly answers = this.testService.answers;
 
 	ngOnInit() {
 		const mode: TestMode = this.activatedRoute.snapshot.data['mode'];

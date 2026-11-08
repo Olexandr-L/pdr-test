@@ -11,34 +11,20 @@ import { categories } from '../maps/categories.map';
 export class QuestionsService {
     private readonly http = inject(HttpClient);
 
+    /** Завантажує всі теми; тема, яку не вдалося завантажити, пропускається. */
     public loadQuestions(): Observable<QuestionWithCategory[]> {
-        const categoriesPaths = structuredClone(categories).map((cat) => cat.path);
-
         return forkJoin(
-            categoriesPaths.map((path) =>
-                this.http.get<QuestionCategory>(path).pipe(
-                    catchError(err => of(null)),
-                )
+            categories.map(({ path }) =>
+                this.http.get<QuestionCategory>(path).pipe(catchError(() => of(null)))
             )
         ).pipe(
-            map((categories) => categories.filter(category => category !== null)),
-            map((categories) => {
-                const questions: QuestionWithCategory[] = [];
-
-                categories.forEach((category) => {
-                    if (category) {
-                        category.questions.forEach((question) => {
-                            questions.push({
-                                ...question,
-                                category: category.id,
-                            });
-                        });
-                    }
-                });
-
-
-                return questions;
-            }),
+            map((loaded) =>
+                loaded.flatMap((category) =>
+                    category
+                        ? category.questions.map((question) => ({ ...question, category: category.id }))
+                        : []
+                )
+            ),
         );
     }
 }
