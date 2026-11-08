@@ -18,9 +18,9 @@ const OPTION_KEYS: QuestionOptionsKeys[] = ['1', '2', '3', '4', '5'];
 export class QuestionCardComponent {
     public readonly question = input.required<QuestionWithCategory | null>();
     public readonly answer = input.required<UserAnswer | null>();
-    /** false на іспиті: вибраний варіант лише виділяється, без «правильно/неправильно». */
+    /** false in an exam: the selected option is only highlighted, without "correct/incorrect". */
     public readonly reveal = input<boolean>(true);
-    /** Перегляд результату: відповідати не можна, правильну відповідь видно і для пропущених. */
+    /** Result review: answering is disabled, the correct answer is shown even for skipped questions. */
     public readonly readonly = input<boolean>(false);
 
     public readonly setAnswer = output<number>();

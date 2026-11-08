@@ -3,7 +3,7 @@ import { TestProgress } from '@app/core/interfaces/questions.interfaces';
 import { Action, createSelector, Selector, State, StateContext } from '@ngxs/store';
 import { ProgressActions } from './progress.action';
 
-/** Ключ — id теми. */
+/** Key is the topic id. */
 export type ProgressStateModel = Record<number, TestProgress>;
 
 @State<ProgressStateModel>({

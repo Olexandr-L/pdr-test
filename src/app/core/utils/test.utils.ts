@@ -15,7 +15,7 @@ export function isExamMode(mode: TestMode): boolean {
     return mode === 'exam' || mode === 'categoryExam';
 }
 
-/** Старі записи не мають режиму: до 20 питань вважаємо іспитом, більше — навчанням. */
+/** Old records have no mode: up to 20 questions is treated as an exam, more as practice. */
 export function getTestMode(test: TestData): TestMode {
     return test.mode ?? (test.questions.length <= EXAM_SIZE ? 'exam' : 'learning');
 }
@@ -33,7 +33,7 @@ export interface TestSummary {
     correct: number;
     mistakes: number;
     skipped: number;
-    /** null для режимів, де немає «склав/не склав». */
+    /** null for modes without a pass/fail outcome. */
     passed: boolean | null;
 }
 
@@ -48,7 +48,7 @@ export function summarizeTest(test: TestData): TestSummary {
         correct,
         mistakes,
         skipped,
-        // Пропущені питання на іспиті рахуються як помилки.
+        // Skipped questions in an exam count as mistakes.
         passed: isExamMode(mode) ? mistakes + skipped <= EXAM_MAX_MISTAKES : null,
     };
 }
@@ -56,8 +56,8 @@ export function summarizeTest(test: TestData): TestSummary {
 const refKey = (categoryId: number, questionId: number) => `${categoryId}:${questionId}`;
 
 /**
- * Список помилок виводиться з історії: питання в ньому, якщо остання відповідь
- * на нього (у будь-якому режимі) була неправильною. Пропущені питання не враховуються.
+ * The mistakes list is derived from history: a question is included if the latest answer
+ * to it (in any mode) was wrong. Skipped questions are not counted.
  */
 export function getMistakeRefs(tests: TestData[]): QuestionRef[] {
     const lastResult = new Map<string, { ref: QuestionRef; isCorrect: boolean }>();

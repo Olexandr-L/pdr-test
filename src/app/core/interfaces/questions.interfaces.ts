@@ -31,11 +31,11 @@ export type TestMode = 'exam' | 'categoryExam' | 'learning' | 'mistakes';
 
 export interface TestData {
     id: number;
-    /** Відсутній у записах, створених до появи режимів. Див. getTestMode(). */
+    /** Missing in records created before modes were introduced. See getTestMode(). */
     mode?: TestMode;
     categoryId?: number;
     questions: QuestionWithCategory[];
-    /** Для пропущених питань тут порожній об'єкт (без answerIndex). */
+    /** For skipped questions this is an empty object (no answerIndex). */
     answers: UserAnswer[];
 }
 
@@ -44,12 +44,12 @@ export interface QuestionRef {
     questionId: number;
 }
 
-/** Незавершене проходження «Усі питання» по темі. */
+/** An unfinished "All questions" run for a topic. */
 export interface TestProgress {
     categoryId: number;
-    /** Порядок питань (після перемішування), щоб відновити його як був. */
+    /** Question order (after shuffling), so it can be restored as it was. */
     questionIds: number[];
-    /** Вирівняно з questionIds; для питань без відповіді — порожній об'єкт. */
+    /** Aligned with questionIds; an empty object for unanswered questions. */
     answers: UserAnswer[];
     currentQuestionIndex: number;
     updatedAt: number;

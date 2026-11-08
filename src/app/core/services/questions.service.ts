@@ -11,7 +11,7 @@ import { categories } from '../maps/categories.map';
 export class QuestionsService {
     private readonly http = inject(HttpClient);
 
-    /** Завантажує всі теми; тема, яку не вдалося завантажити, пропускається. */
+    /** Loads all topics; a topic that fails to load is skipped. */
     public loadQuestions(): Observable<QuestionWithCategory[]> {
         return forkJoin(
             categories.map(({ path }) =>

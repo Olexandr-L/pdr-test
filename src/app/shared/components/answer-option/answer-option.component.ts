@@ -3,7 +3,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { UserAnswer } from '@app/core/interfaces/questions.interfaces';
 import { isAnswered } from '@app/core/utils/test.utils';
 export interface AnswerOptionView {
-    /** Номер варіанта (1-based), саме його зберігаємо як answerIndex. */
+    /** Option number (1-based); this is what is stored as answerIndex. */
     number: number;
     text: string;
 }

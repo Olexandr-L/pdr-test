@@ -20,7 +20,7 @@ html {
       container-text-color: var(--mat-sys-primary),
     ));
 
-  // Округлі «пігулки» для всіх кнопок.
+  // Rounded "pill" shape for all buttons.
   @include mat.button-overrides((outlined-container-shape: 14px,
       filled-container-shape: 14px,
       tonal-container-shape: 14px,
@@ -36,10 +36,10 @@ html {
       track-shape: 999px,
     ));
 
-  // Рамка для блоків-карток (таймер, сітка питань, підсумок, теми).
+  // Border for card blocks (timer, question grid, summary, topics).
   --app-border-color: #ffd9e1;
 
-  // Спільні токени для карток.
+  // Shared tokens for cards.
   --app-radius: 20px;
   --app-card-bg: color-mix(in srgb, var(--mat-sys-surface-container-lowest) 85%, transparent);
   --app-shadow: 0 1px 2px rgb(140 20 60 / 0.06), 0 8px 24px -8px rgb(140 20 60 / 0.14);

@@ -12,7 +12,7 @@ export interface TestResultItem {
 	correctAnswers: number;
 	errors: number;
 	skipped: number;
-	/** null для режимів, де немає «склав/не склав». */
+	/** null for modes without a pass/fail outcome. */
 	passed: boolean | null;
 }
 
@@ -30,16 +30,16 @@ export class ResultListComponent {
 	public readonly tests = this.store.selectSignal(TestsState.getAllTests);
 
 	public readonly results: Signal<TestResultItem[]> = computed(() => {
-		// Історія містить усі режими (з неї будується «Робота над помилками»),
-		// але в «Моїх результатах» показуємо лише іспити.
+		// History contains all modes ("Review mistakes" is built from it),
+		// but "My results" shows only exams.
 		const tests = this.tests().filter((test) => isExamMode(getTestMode(test)));
 
-		// Копія, щоб не розвертати масив у сторі.
+		// Copy, so the array in the store is not reversed.
 		return [...tests].reverse().map((test, index) => {
 			const summary = summarizeTest(test);
 
 			return {
-				// Найстаріший тест — №1, найновіший — №length.
+				// The oldest test is #1, the newest is #length.
 				index: tests.length - index,
 				id: test.id,
 				mode: TEST_MODE_LABELS[summary.mode],

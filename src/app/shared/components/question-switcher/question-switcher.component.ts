@@ -13,7 +13,7 @@ import { isAnswered } from '@app/core/utils/test.utils';
 export class QuestionSwitcherComponent {
     public readonly answers = input.required<UserAnswer[]>();
     public readonly currentQuestionIndex = input.required<number>();
-    /** false на іспиті: показуємо лише «відповіла / ще ні», без ✅/❌. */
+    /** false in an exam: show only "answered / not yet", without ✅/❌. */
     public readonly reveal = input<boolean>(true);
 
     public readonly setQuestionIndex = output<number>();

@@ -10,7 +10,7 @@ import { QuestionCardComponent } from '@app/shared/components/question-card/ques
 import { QuestionSwitcherComponent } from '@app/shared/components/question-switcher/question-switcher.component';
 import { TimerComponent } from '@app/shared/components/timer/timer.component';
 
-/** Одна сторінка для всіх режимів; режим задається в data маршруту. */
+/** A single page for all modes; the mode is set in the route data. */
 @Component({
 	selector: 'app-test',
 	imports: [MatButtonModule, RouterLink, TimerComponent, QuestionSwitcherComponent, QuestionCardComponent],

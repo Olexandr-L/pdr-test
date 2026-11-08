@@ -11,7 +11,7 @@
             <span class="mode">{{ item.mode }}</span>
         </div>
 
-        <!-- Плашка завжди займає місце, щоб блоки зі статистикою були на одному рівні. -->
+        <!-- The badge always takes up space so the stats blocks stay aligned. -->
         <div class="status" [class.placeholder]="item.passed === null">
             @if (item.passed !== null) {
                 {{ item.passed ? 'Складено 🌞' : 'Не складено 😿' }}

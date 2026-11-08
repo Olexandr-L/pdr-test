@@ -45,7 +45,7 @@ export class TestService {
         const question = this.currentQuestion();
         const index = this._currentQuestionIndex();
 
-        // Відповідь остаточна: повторно відповісти на те саме питання не можна.
+        // The answer is final: the same question cannot be answered again.
         if (this.finished || !question || isAnswered(this._answers()[index])) {
             return;
         }
@@ -152,7 +152,7 @@ export class TestService {
         let questions = this.questions();
         let answers = this.answers();
 
-        // Поза іспитом зберігаємо лише питання, на які встигли відповісти.
+        // Outside an exam, save only the questions that were answered.
         if (!this.isExam()) {
             const answeredIndexes = answers
                 .map((answer, index) => (isAnswered(answer) ? index : -1))
@@ -170,7 +170,7 @@ export class TestService {
         };
     }
 
-    /** Прогрес зберігаємо лише для «Усі питання» по темі: іспит має таймер і проходиться за раз. */
+    /** Progress is saved only for "All questions" of a topic: an exam has a timer and is taken in one go. */
     private get progressCategoryId(): number | undefined {
         return this._mode() === 'learning' ? this.categoryId() : undefined;
     }
@@ -182,7 +182,7 @@ export class TestService {
             return;
         }
 
-        // Поки немає жодної відповіді — зберігати нічого (і нема чого продовжувати).
+        // Until there is at least one answer, there is nothing to save (and nothing to resume).
         if (!this._answers().some(isAnswered)) {
             this.clearProgress();
             return;
@@ -207,7 +207,7 @@ export class TestService {
         }
     }
 
-    /** Відновлює незавершене проходження теми. Повертає false, якщо відновлювати нічого. */
+    /** Restores an unfinished topic run. Returns false if there is nothing to restore. */
     private restoreProgress(): boolean {
         const categoryId = this.progressCategoryId;
 
@@ -228,7 +228,7 @@ export class TestService {
         const answers: UserAnswer[] = [];
         let currentQuestionIndex = 0;
 
-        // Питання, яких уже немає в базі, відкидаємо; індекс поточного зсуваємо відповідно.
+        // Drop questions that no longer exist in the database; shift the current index accordingly.
         progress.questionIds.forEach((id, index) => {
             const question = byId.get(id);
             if (!question) {
@@ -242,7 +242,7 @@ export class TestService {
             byId.delete(id);
         });
 
-        // Нові питання, що з'явились у темі після збереження, — в кінець.
+        // New questions added to the topic after saving go to the end.
         const added = shuffle([...byId.values()]);
         questions.push(...added);
         answers.push(...added.map(() => ({} as UserAnswer)));

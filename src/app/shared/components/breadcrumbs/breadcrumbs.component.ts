@@ -6,13 +6,13 @@ import { filter, map } from 'rxjs';
 
 export interface Breadcrumb {
 	label: string;
-	/** Без посилання — поточна сторінка. */
+	/** No link means the current page. */
 	link?: string | unknown[];
 }
 
 /**
- * Ланцюжок крихт для маршруту (без «Головної» — вона додається автоматично).
- * Останній елемент — поточна сторінка. Задається в `data.breadcrumbs` маршруту.
+ * Breadcrumb trail for a route (without "Home", which is added automatically).
+ * The last item is the current page. Defined in the route's `data.breadcrumbs`.
  */
 export type BreadcrumbsFn = (params: ParamMap) => Breadcrumb[];
 
@@ -44,7 +44,7 @@ export class BreadcrumbsComponent {
 		return trail.length ? [HOME, ...trail] : [];
 	});
 
-	/** Куди веде «Назад» на вузьких екранах — на сторінку рівнем вище. */
+	/** Where "Back" leads on narrow screens: the page one level up. */
 	public readonly parent = computed(() => {
 		const crumbs = this.crumbs();
 		return crumbs.length > 1 ? crumbs[crumbs.length - 2] : null;

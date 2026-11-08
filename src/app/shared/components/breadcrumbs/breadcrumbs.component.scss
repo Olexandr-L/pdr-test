@@ -55,8 +55,8 @@
     margin-inline-start: -12px;
 }
 
-// На телефоні повний ланцюжок з довгими назвами тем займає пів екрана —
-// лишаємо одну кнопку на рівень вище.
+// On a phone the full trail with long topic names takes up half the screen,
+// so keep a single button to go one level up.
 @media (max-width: 599px) {
     .trail {
         display: none;
