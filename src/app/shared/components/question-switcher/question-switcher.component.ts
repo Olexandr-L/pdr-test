@@ -37,7 +37,7 @@ export class QuestionSwitcherComponent {
 
     public readonly answers = input.required<UserAnswer[]>();
     public readonly currentQuestionIndex = input.required<number>();
-    /** false in an exam: show only "answered / not yet", without ✅/❌. */
+    /** false in an exam: show only "answered / not yet", without the green/red fill. */
     public readonly reveal = input<boolean>(true);
 
     public readonly setQuestionIndex = output<number>();

@@ -45,23 +45,15 @@
         }
 
         &.correct {
-            --mat-button-outlined-outline-color: #66bb6a;
-            --mat-button-outlined-label-text-color: #2e7d32;
-            background-color: #e8f5e9;
+            --mat-button-outlined-outline-color: #43a047;
+            --mat-button-outlined-label-text-color: #1b5e20;
+            background-color: #a5d6a7;
         }
 
         &.wrong {
-            --mat-button-outlined-outline-color: #ef5350;
-            --mat-button-outlined-label-text-color: #c62828;
-            background-color: #ffebee;
-        }
-
-        .status {
-            position: absolute;
-            top: 1px;
-            right: 2px;
-            font-size: 8px;
-            line-height: 1;
+            --mat-button-outlined-outline-color: #e53935;
+            --mat-button-outlined-label-text-color: #b71c1c;
+            background-color: #ef9a9a;
         }
     }
 }

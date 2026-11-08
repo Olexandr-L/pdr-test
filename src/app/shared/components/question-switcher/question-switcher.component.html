@@ -4,12 +4,5 @@
         [class.wrong]="reveal() && answer.isCorrect === false && idx !== currentQuestionIndex()"
         (click)="setQuestionIndex.emit(idx)">
         {{ idx + 1 }}
-        @if (reveal()) {
-            @if (answer.isCorrect) {
-                <span class="status">✅</span>
-            } @else if (answer.isCorrect === false) {
-                <span class="status">❌</span>
-            }
-        }
     </button>
 }
