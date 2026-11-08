@@ -51,6 +51,14 @@ export class TestComponent implements OnInit {
 		this.testService.updateCurrentQuestionIndex(index);
 	}
 
+	public onPrev() {
+		this.setQuestionIndex(this.currentQuestionIndex() - 1);
+	}
+
+	public onNext() {
+		this.setQuestionIndex(this.currentQuestionIndex() + 1);
+	}
+
 	public onTimeEnd() {
 		this.testService.finishTest();
 	}

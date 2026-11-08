@@ -10,11 +10,14 @@
         <app-question-card [question]="currentQuestion()" [answer]="currentAnswer()" [reveal]="!isExam()"
             (setAnswer)="onSetAnswer($event)" />
 
-        @if (mode() !== 'mistakes') {
-            <div class="actions">
+        <div class="actions">
+            <button matButton="outlined" [disabled]="currentQuestionIndex() === 0" (click)="onPrev()">‹ Назад</button>
+            @if (mode() !== 'mistakes') {
                 <button matButton="outlined" (click)="onFinish()">Завершити</button>
-            </div>
-        }
+            }
+            <button matButton="outlined" [disabled]="currentQuestionIndex() >= questionsCount() - 1"
+                (click)="onNext()">Далі ›</button>
+        </div>
     } @else {
         <div class="empty">
             @if (mode() === 'mistakes') {
