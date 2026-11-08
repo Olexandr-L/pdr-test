@@ -12,8 +12,19 @@
     <div class="subtitle">{{ categoryName() }}</div>
 }
 
-<div>Правильні відповіді: {{ summary().correct }}</div>
-<div>Помилки: {{ summary().mistakes }}</div>
-@if (summary().skipped) {
-    <div>Пропущено: {{ summary().skipped }}</div>
-}
+<div class="stats">
+    <div class="stat correct">
+        <span class="value">{{ summary().correct }}</span>
+        <span class="label">Правильні відповіді</span>
+    </div>
+    <div class="stat mistakes">
+        <span class="value">{{ summary().mistakes }}</span>
+        <span class="label">Помилки</span>
+    </div>
+    @if (summary().skipped) {
+        <div class="stat">
+            <span class="value">{{ summary().skipped }}</span>
+            <span class="label">Пропущено</span>
+        </div>
+    }
+</div>

@@ -1,12 +1,13 @@
 app-timer,
 app-question-switcher {
-    margin-bottom: 10px;
+    margin-bottom: 14px;
 }
 
 .actions {
+    gap: 10px;
     display: flex;
     justify-content: center;
-    margin-top: 20px;
+    margin-top: 24px;
 }
 
 .empty {

@@ -1,17 +1,124 @@
 :host {
   display: block;
+  max-width: 560px;
+  margin: 0 auto;
+}
+
+.hero {
+  text-align: center;
+  margin: 8px 0 28px;
+
+  h1 {
+    margin: 0 0 6px;
+    font-size: 30px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: var(--mat-sys-primary);
+  }
+
+  p {
+    margin: 0;
+    font-size: 15px;
+    color: var(--mat-sys-on-surface-variant);
+  }
 }
 
 .menu {
-  padding: 20px;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
 }
 
-.full-width {
-  width: 100%;
+.tile {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 18px;
+  border-radius: var(--app-radius);
+  border: 1px solid var(--app-border-color);
+  background: var(--app-card-bg);
+  box-shadow: var(--app-shadow);
+  color: var(--mat-sys-on-surface);
+  text-decoration: none;
+  transition: transform var(--app-transition), box-shadow var(--app-transition), border-color var(--app-transition);
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--app-shadow-hover);
+    border-color: var(--mat-sys-primary);
+  }
+
+  &:active {
+    transform: translateY(0) scale(0.99);
+  }
+
+  &:focus-visible {
+    outline: 3px solid var(--mat-sys-primary);
+    outline-offset: 2px;
+  }
+
+  &.primary {
+    background: linear-gradient(135deg, var(--mat-sys-primary) 0%, color-mix(in srgb, var(--mat-sys-primary) 70%, var(--mat-sys-tertiary)) 100%);
+    border-color: transparent;
+    color: var(--mat-sys-on-primary);
+
+    .icon {
+      background: rgb(255 255 255 / 0.2);
+    }
+
+    .hint {
+      color: inherit;
+      opacity: 0.85;
+    }
+  }
+
+  &.disabled {
+    pointer-events: none;
+    opacity: 0.55;
+    box-shadow: none;
+  }
+}
+
+.icon {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  font-size: 24px;
+  background: var(--mat-sys-primary-container);
+}
+
+.text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.label {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.hint {
+  font-size: 13px;
+  color: var(--mat-sys-on-surface-variant);
+}
+
+.badge {
+  margin-left: auto;
+  min-width: 28px;
+  height: 28px;
+  padding: 0 8px;
+  box-sizing: border-box;
+  display: grid;
+  place-items: center;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 700;
+  background: var(--mat-sys-primary);
+  color: var(--mat-sys-on-primary);
 }

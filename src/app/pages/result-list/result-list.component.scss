@@ -4,10 +4,32 @@
     gap: 10px;
 }
 
+.table-card {
+    overflow-x: auto;
+    border: 1px solid var(--app-border-color);
+    border-radius: var(--app-radius);
+    background: var(--app-card-bg);
+    box-shadow: var(--app-shadow);
+}
+
+table {
+    --mat-table-background-color: transparent;
+    --mat-table-row-item-outline-color: var(--app-border-color);
+    --mat-table-header-headline-weight: 700;
+    --mat-table-header-headline-color: var(--mat-sys-primary);
+
+    width: 100%;
+}
+
 .table-row {
     cursor: pointer;
+    transition: background-color var(--app-transition);
 
     &:hover {
-        background-color: var(--mat-sys-surface-container-high);
+        background-color: color-mix(in srgb, var(--mat-sys-primary-container) 55%, transparent);
+    }
+
+    &:last-child td {
+        border-bottom: none;
     }
 }
