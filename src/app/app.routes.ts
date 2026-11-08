@@ -1,10 +1,8 @@
 import { Routes } from '@angular/router';
 import { HomeComponent } from './pages/home/home.component';
-import { TestComponent } from './pages/test/test.component';
 import { ResultComponent } from './pages/result/result.component';
 import { ResultListComponent } from './pages/result-list/result-list.component';
 import { CategoryListComponent } from './pages/category-list/category-list.component';
-import { CategoryComponent } from './pages/category/category.component';
 
 export const routes: Routes = [
     {
@@ -13,11 +11,13 @@ export const routes: Routes = [
     },
     {
         path: 'test',
-        component: TestComponent,
+        loadComponent: () => import('./pages/test/test.component').then((m) => m.TestComponent),
+        data: { mode: 'exam' },
     },
     {
         path: 'test/:id',
-        component: TestComponent,
+        loadComponent: () => import('./pages/test/test.component').then((m) => m.TestComponent),
+        data: { mode: 'categoryExam' },
     },
     {
         path: 'category-list',
@@ -29,7 +29,13 @@ export const routes: Routes = [
     },
     {
         path: 'category/:id',
-        component: CategoryComponent,
+        loadComponent: () => import('./pages/test/test.component').then((m) => m.TestComponent),
+        data: { mode: 'learning' },
+    },
+    {
+        path: 'mistakes',
+        loadComponent: () => import('./pages/test/test.component').then((m) => m.TestComponent),
+        data: { mode: 'mistakes' },
     },
     {
         path: 'result',

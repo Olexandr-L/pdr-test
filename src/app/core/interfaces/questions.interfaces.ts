@@ -27,8 +27,19 @@ export interface UserAnswer {
     isCorrect: boolean;
 }
 
+export type TestMode = 'exam' | 'categoryExam' | 'learning' | 'mistakes';
+
 export interface TestData {
     id: number;
+    /** Відсутній у записах, створених до появи режимів. Див. getTestMode(). */
+    mode?: TestMode;
+    categoryId?: number;
     questions: QuestionWithCategory[];
+    /** Для пропущених питань тут порожній об'єкт (без answerIndex). */
     answers: UserAnswer[];
+}
+
+export interface QuestionRef {
+    categoryId: number;
+    questionId: number;
 }

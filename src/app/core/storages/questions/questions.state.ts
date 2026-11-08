@@ -1,6 +1,7 @@
 import { inject, Injectable } from '@angular/core';
-import { QuestionWithCategory } from '@app/core/interfaces/questions.interfaces';
+import { QuestionRef, QuestionWithCategory } from '@app/core/interfaces/questions.interfaces';
 import { QuestionsService } from '@app/core/services/questions.service';
+import { shuffle } from '@app/core/utils/test.utils';
 import { Action, createSelector, Selector, State } from '@ngxs/store';
 import { QuestionsActions } from './questions.action';
 import { of, tap } from 'rxjs';
@@ -26,8 +27,7 @@ export class QuestionsState {
 
     static getQuestionsByCategory(category: number, size?: number) {
         return createSelector([QuestionsState], (state: QuestionWithCategory[]) => {
-            const shuffled = [...(state ?? [])].sort(() => 0.5 - Math.random());
-            const filtered = shuffled.filter(question => question.category === category);
+            const filtered = shuffle((state ?? []).filter(question => question.category === category));
 
             if (size) {
                 return filtered.slice(0, size);
@@ -38,8 +38,14 @@ export class QuestionsState {
 
     static getRandomQuestions(size: number) {
         return createSelector([QuestionsState], (state: QuestionWithCategory[]) => {
-            const shuffled = [...(state ?? [])].sort(() => 0.5 - Math.random());
-            return shuffled.slice(0, size);
+            return shuffle(state ?? []).slice(0, size);
+        });
+    }
+
+    static getQuestionsByRefs(refs: QuestionRef[]) {
+        return createSelector([QuestionsState], (state: QuestionWithCategory[]) => {
+            const keys = new Set(refs.map(({ categoryId, questionId }) => `${categoryId}:${questionId}`));
+            return shuffle((state ?? []).filter(question => keys.has(`${question.category}:${question.id}`)));
         });
     }
 

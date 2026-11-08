@@ -1,5 +1,7 @@
 import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
-import { UserAnswer } from '@app/core/interfaces/questions.interfaces';
+import { TestData } from '@app/core/interfaces/questions.interfaces';
+import { categories } from '@app/core/maps/categories.map';
+import { summarizeTest, TEST_MODE_LABELS } from '@app/core/utils/test.utils';
 
 @Component({
     selector: 'app-summary',
@@ -9,14 +11,14 @@ import { UserAnswer } from '@app/core/interfaces/questions.interfaces';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SummaryComponent {
-    public readonly answers = input.required<UserAnswer[]>();
+    public readonly test = input.required<TestData>();
 
+    public readonly summary = computed(() => summarizeTest(this.test()));
 
-    public readonly correctAnswersCount = computed(() => {
-        return this.answers().filter(a => a.isCorrect).length
-    })
+    public readonly modeLabel = computed(() => TEST_MODE_LABELS[this.summary().mode]);
 
-    public readonly mistakesAnswersCount = computed(() => {
-        return this.answers().filter(a => !a.isCorrect).length
-    })
+    public readonly categoryName = computed(() => {
+        const categoryId = this.test().categoryId;
+        return categories.find((category) => category.id === categoryId)?.name ?? null;
+    });
 }

@@ -1,6 +1,9 @@
 <section class="menu">
     <a matButton="outlined" class="full-width" routerLink="/test">Почати іспит</a>
     <a matButton="outlined" class="full-width" routerLink="/category-list">Тести по темах</a>
-    <a matButton="outlined" class="full-width" routerLink="/">Робота над помилками</a>
+    <a matButton="outlined" class="full-width" [routerLink]="mistakesCount() ? '/mistakes' : null"
+        [disabled]="!mistakesCount()">
+        Робота над помилками ({{ mistakesCount() }})
+    </a>
     <a matButton="outlined" class="full-width" routerLink="/result">Мої результати</a>
 </section>

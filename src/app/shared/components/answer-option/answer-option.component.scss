@@ -20,4 +20,10 @@
     &.help {
         background-color: #c8e6c9;
     }
+
+    &.selected {
+        background-color: var(--mat-sys-secondary-container);
+        color: var(--mat-sys-on-secondary-container);
+        border-color: var(--mat-sys-secondary);
+    }
 }

@@ -9,7 +9,7 @@
         <div class="options">
             @for(option of options(); track $index){
             <app-answer-option [index]="$index" [question]="question()" [currentAnswer]="answer()"
-                (setAnswer)="setAnswer.emit($event)" />
+                [reveal]="reveal()" [readonly]="readonly()" (setAnswer)="setAnswer.emit($event)" />
             }
         </div>
     </section>

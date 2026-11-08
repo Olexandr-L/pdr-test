@@ -1,6 +1,8 @@
-<app-summary [answers]="answers()"/>
+@if (testData(); as test) {
+    <app-summary [test]="test" />
 
-<app-question-switcher [answers]="answers()" [currentQuestionIndex]="currentQuestionIndex()"
-    (setQuestionIndex)="setQuestionIndex($event)" />
+    <app-question-switcher [answers]="answers()" [currentQuestionIndex]="currentQuestionIndex()"
+        (setQuestionIndex)="setQuestionIndex($event)" />
 
-<app-question-card [question]="currentQuestion()" [answer]="currentAnswer()" />
+    <app-question-card [question]="currentQuestion()" [answer]="currentAnswer()" [readonly]="true" />
+}

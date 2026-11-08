@@ -12,6 +12,8 @@ import { AnswerOptionComponent } from '../answer-option/answer-option.component'
 export class QuestionCardComponent {
     public readonly question = input.required<QuestionWithCategory>();
     public readonly answer = input.required<UserAnswer>();
+    public readonly reveal = input<boolean>(true);
+    public readonly readonly = input<boolean>(false);
 
     public readonly setAnswer = output<number>();
 

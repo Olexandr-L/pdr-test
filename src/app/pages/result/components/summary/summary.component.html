@@ -1,10 +1,19 @@
 <div class="title">
-    @if(mistakesAnswersCount() <= 2){ 
-        Іспит складено! 🌞 
-    } @else { 
+    @if (summary().passed === true) {
+        Іспит складено! 🌞
+    } @else if (summary().passed === false) {
         Іспит не складено 😿
-    } 
+    } @else {
+        {{ modeLabel() }}
+    }
 </div>
 
-<div>Правильні відповіді: {{correctAnswersCount()}}</div>
-<div>Помилки: {{mistakesAnswersCount()}}</div>
+@if (categoryName()) {
+    <div class="subtitle">{{ categoryName() }}</div>
+}
+
+<div>Правильні відповіді: {{ summary().correct }}</div>
+<div>Помилки: {{ summary().mistakes }}</div>
+@if (summary().skipped) {
+    <div>Пропущено: {{ summary().skipped }}</div>
+}

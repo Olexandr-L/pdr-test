@@ -5,12 +5,15 @@ import { RouterLink } from '@angular/router';
 import { TestsState } from '@app/core/storages/tests/tests.state';
 import { Store } from '@ngxs/store';
 import { MatTableModule } from '@angular/material/table';
+import { summarizeTest, TEST_MODE_LABELS } from '@app/core/utils/test.utils';
 
 export interface TestTableRow {
 	index: number;
 	id: number;
+	mode: string;
 	correctAnswers: number;
 	errors: number;
+	skipped: number;
 	result: string;
 }
 
@@ -30,28 +33,30 @@ export class ResultListComponent {
 	public readonly tests = this.store.selectSignal(TestsState.getAllTests);
 
 	public readonly tableData: Signal<TestTableRow[]> = computed(() => {
-		const tests = this.tests().reverse();
+		// Копія, щоб не розвертати масив у сторі.
+		const tests = [...this.tests()].reverse();
 
 		return tests.map((test, index) => {
-			const correctAnswers = test.answers.filter(
-				answer => answer.isCorrect
-			).length;
+			const summary = summarizeTest(test);
 
-			const errors = test.answers.filter(
-				answer => !answer.isCorrect
-			).length;
+			let result = '—';
+			if (summary.passed !== null) {
+				result = summary.passed ? 'Складено 🌞' : 'Не складено 😿';
+			}
 
 			return {
-				index,
+				index: index + 1,
 				id: test.id,
-				correctAnswers,
-				errors,
-				result: errors <= 2 ? 'Складено 🌞' : 'Не складено 😿',
+				mode: TEST_MODE_LABELS[summary.mode],
+				correctAnswers: summary.correct,
+				errors: summary.mistakes,
+				skipped: summary.skipped,
+				result,
 			};
 		});
 	});
 
-	public readonly displayedColumns: string[] = ['position', 'date', 'correctAnswers', 'errors', 'result'];
+	public readonly displayedColumns: string[] = ['position', 'date', 'mode', 'correctAnswers', 'errors', 'skipped', 'result'];
 
 
 	public readonly columns = [
@@ -66,6 +71,11 @@ export class ResultListComponent {
 			cell: (element: TestTableRow) => `${this.datePipe.transform(element.id, 'short')}`,
 		},
 		{
+			columnDef: 'mode',
+			header: 'Режим',
+			cell: (element: TestTableRow) => element.mode,
+		},
+		{
 			columnDef: 'correctAnswers',
 			header: 'Правильні відповіді',
 			cell: (element: TestTableRow) => `${element.correctAnswers}`,
@@ -74,6 +84,11 @@ export class ResultListComponent {
 			columnDef: 'errors',
 			header: 'Помилки',
 			cell: (element: TestTableRow) => `${element.errors}`,
+		},
+		{
+			columnDef: 'skipped',
+			header: 'Пропущено',
+			cell: (element: TestTableRow) => `${element.skipped}`,
 		},
 		{
 			columnDef: 'result',
