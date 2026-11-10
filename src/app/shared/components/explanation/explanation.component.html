@@ -1,0 +1,12 @@
+@if (explanation()) {
+    <p class="text">{{ explanation() }}</p>
+}
+
+@for (rule of rules(); track rule.ref) {
+    <figure class="rule">
+        <figcaption>
+            <a class="rule-title" [href]="rule.url" target="_blank" rel="noopener">{{ rule.title }}</a>
+        </figcaption>
+        <blockquote class="rule-text">{{ rule.text }}</blockquote>
+    </figure>
+}

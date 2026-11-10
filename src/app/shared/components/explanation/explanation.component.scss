@@ -1,0 +1,31 @@
+:host {
+    display: block;
+}
+
+.text {
+    margin: 8px 0 0;
+    white-space: pre-line;
+}
+
+.rule {
+    margin: 12px 0 0;
+}
+
+.rule-title {
+    font-weight: 700;
+    color: var(--mat-sys-primary);
+    text-decoration: none;
+
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
+.rule-text {
+    margin: 6px 0 0;
+    padding: 2px 0 2px 12px;
+    border-left: 3px solid var(--app-border-color);
+    color: var(--mat-sys-on-surface-variant);
+    font-size: 14px;
+    white-space: pre-line;
+}

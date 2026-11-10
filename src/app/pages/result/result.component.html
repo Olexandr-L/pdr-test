@@ -4,7 +4,7 @@
     <app-question-switcher [answers]="answers" [currentQuestionIndex]="currentQuestionIndex()"
         (setQuestionIndex)="setQuestionIndex($event)" />
 
-    <app-question-card [question]="currentQuestion()" [answer]="currentAnswer()" [readonly]="true" />
+    <app-question-card [question]="currentQuestion()" [answer]="currentAnswer()" [readonly]="true" [explain]="true" />
 } @else {
     <p class="empty">Результат не знайдено.</p>
 }

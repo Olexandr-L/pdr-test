@@ -161,6 +161,9 @@ export class TestService {
             answers = answeredIndexes.map((index) => answers[index]);
         }
 
+        // Explanations are not stored with the result: the result page reads them from the current questions.
+        questions = questions.map(({ explanation, rules, ...question }) => question);
+
         return {
             id: new Date().getTime(),
             mode: this._mode(),

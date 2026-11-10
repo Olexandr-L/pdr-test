@@ -11,6 +11,8 @@ export interface Question extends QuestionOptions {
     answer: number | null;
     /** Explanation shown after answering outside an exam. Optional: not every question has one. */
     explanation?: string;
+    /** Rule excerpts that justify the answer, as "<document>:<entry key>", e.g. "pdr:2.3 б". */
+    rules?: string[];
 }
 
 export interface QuestionWithCategory extends Question {

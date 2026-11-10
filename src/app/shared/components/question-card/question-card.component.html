@@ -14,11 +14,8 @@
         </div>
 
         @if (showExplanation()) {
-            <div class="explanation" [class.is-correct]="answer()?.isCorrect" [class.is-incorrect]="!answer()?.isCorrect"
-                role="status">
-                <div class="explanation-title">
-                    {{ answer()?.isCorrect ? 'Правильно' : 'Неправильно' }}
-                </div>
+            <div class="explanation" [class.is-incorrect]="!answer()?.isCorrect" role="status">
+                <div class="explanation-title">{{ status() }}</div>
 
                 @if (!answer()?.isCorrect && correctOption(); as correct) {
                     <p class="explanation-correct">
@@ -26,9 +23,7 @@
                     </p>
                 }
 
-                @if (question.explanation) {
-                    <p class="explanation-text">{{ question.explanation }}</p>
-                }
+                <app-explanation [question]="question" />
             </div>
         }
     </section>
