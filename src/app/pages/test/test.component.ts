@@ -4,7 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { TestMode } from '@app/core/interfaces/questions.interfaces';
 import { TestService } from '@app/core/services/test.service';
-import { EXAM_MAX_MISTAKES, EXAM_MINUTES, isAnswered } from '@app/core/utils/test.utils';
+import { examMaxMistakes, examMinutes, isAnswered } from '@app/core/utils/test.utils';
 import { ConfirmDialogComponent, ConfirmDialogData } from '@app/shared/components/confirm-dialog/confirm-dialog.component';
 import { QuestionCardComponent } from '@app/shared/components/question-card/question-card.component';
 import { QuestionSwitcherComponent } from '@app/shared/components/question-switcher/question-switcher.component';
@@ -23,12 +23,11 @@ export class TestComponent implements OnInit {
 	private readonly activatedRoute = inject(ActivatedRoute);
 	private readonly dialog = inject(MatDialog);
 
-	public readonly examMinutes = EXAM_MINUTES;
-
 	public readonly isExam = this.testService.isExam;
 	public readonly mode = this.testService.mode;
 	public readonly loaded = this.testService.loaded;
 	public readonly questionsCount = this.testService.questionsCount;
+	public readonly examMinutes = computed(() => examMinutes(this.questionsCount()));
 
 	public readonly currentQuestion = this.testService.currentQuestion;
 	public readonly currentQuestionIndex = this.testService.currentQuestionIndex;
@@ -79,7 +78,7 @@ export class TestComponent implements OnInit {
 		const data: ConfirmDialogData = {
 			title: 'Завершити іспит?',
 			message: skipped
-				? `Без відповіді: ${skipped}. Пропущені питання рахуються як помилки (допустимо не більше ${EXAM_MAX_MISTAKES}).`
+				? `Без відповіді: ${skipped}. Пропущені питання рахуються як помилки (допустимо не більше ${examMaxMistakes(this.questionsCount())}).`
 				: 'Ви відповіли на всі питання.',
 			confirmText: 'Завершити',
 		};

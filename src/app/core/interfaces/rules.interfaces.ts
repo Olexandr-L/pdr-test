@@ -11,7 +11,7 @@ export interface RuleDocument {
     /** Id used in question references: "<doc>:<entry key>". */
     doc: string;
     title: string;
-    /** Short name shown before the label, e.g. "ПДР". */
+    /** Short name shown before the label, e.g. "Наказ МОЗ". */
     short: string;
     url: string;
     /** Date of the edition the text was taken from (null if the source does not state it). */
@@ -21,7 +21,7 @@ export interface RuleDocument {
 
 export interface ResolvedRule {
     ref: string;
-    /** "ПДР, п. 2.3 «б»" */
+    /** "Наказ МОЗ, п. 3.1" */
     title: string;
     text: string;
     url: string;

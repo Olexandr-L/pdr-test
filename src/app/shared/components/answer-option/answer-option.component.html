@@ -1,4 +1,5 @@
 <button matButton="outlined" [disabled]="isDisabled()" [class]="state()" class="option-button"
     (click)="choose.emit(option().number)">
-    {{ option().text }}
+    <span class="letter">{{ letter() }}</span>
+    <span class="option-text">{{ option().text }}</span>
 </button>

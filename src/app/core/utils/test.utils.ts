@@ -1,8 +1,31 @@
 import { QuestionRef, TestData, TestMode, UserAnswer } from '../interfaces/questions.interfaces';
 
-export const EXAM_SIZE = 20;
-export const EXAM_MINUTES = 20;
-export const EXAM_MAX_MISTAKES = 2;
+/** Krok 2 (general medicine): 150 tasks, about one minute per task. */
+export const EXAM_SIZE = 150;
+export const EXAM_SECONDS_PER_QUESTION = 60;
+/** Share of correct answers needed to pass. The official threshold is set every year; adjust if it changes. */
+export const EXAM_PASS_RATIO = 0.605;
+
+/** Letters used for answer options, as in the Krok booklets. */
+export const OPTION_LETTERS = ['A', 'B', 'C', 'D', 'E'];
+
+export function optionLetter(number: number): string {
+    return OPTION_LETTERS[number - 1] ?? String(number);
+}
+
+/** Exam length in minutes for the given number of questions (a topic or a small bank can have fewer than EXAM_SIZE). */
+export function examMinutes(questionsCount: number): number {
+    return Math.max(1, Math.ceil((questionsCount * EXAM_SECONDS_PER_QUESTION) / 60));
+}
+
+/** How many wrong or skipped answers still pass an exam of this size. */
+export function examMaxMistakes(questionsCount: number): number {
+    return questionsCount - Math.ceil(questionsCount * EXAM_PASS_RATIO);
+}
+
+export function formatPercent(value: number): string {
+    return `${String(Math.round(value * 1000) / 10).replace(".", ",")}%`;
+}
 
 export const TEST_MODE_LABELS: Record<TestMode, string> = {
     exam: 'Іспит',
@@ -33,6 +56,8 @@ export interface TestSummary {
     correct: number;
     mistakes: number;
     skipped: number;
+    /** Share of correct answers among all questions of the test (0..1). */
+    score: number;
     /** null for modes without a pass/fail outcome. */
     passed: boolean | null;
 }
@@ -41,15 +66,18 @@ export function summarizeTest(test: TestData): TestSummary {
     const mode = getTestMode(test);
     const correct = test.answers.filter((a) => isAnswered(a) && a.isCorrect).length;
     const mistakes = countMistakes(test.answers);
-    const skipped = test.questions.length - correct - mistakes;
+    const total = test.questions.length;
+    const skipped = total - correct - mistakes;
+    const score = total ? correct / total : 0;
 
     return {
         mode,
         correct,
         mistakes,
         skipped,
+        score,
         // Skipped questions in an exam count as mistakes.
-        passed: isExamMode(mode) ? mistakes + skipped <= EXAM_MAX_MISTAKES : null,
+        passed: isExamMode(mode) ? score >= EXAM_PASS_RATIO : null,
     };
 }
 

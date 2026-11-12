@@ -6,7 +6,7 @@
   },
   "newProjectRoot": "projects",
   "projects": {
-    "pgr-test": {
+    "krok2-test": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -86,10 +86,10 @@
           "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "pgr-test:build:production"
+              "buildTarget": "krok2-test:build:production"
             },
             "development": {
-              "buildTarget": "pgr-test:build:development"
+              "buildTarget": "krok2-test:build:development"
             }
           },
           "defaultConfiguration": "development"

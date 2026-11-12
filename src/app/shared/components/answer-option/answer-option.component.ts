@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, computed, input, output } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { UserAnswer } from '@app/core/interfaces/questions.interfaces';
-import { isAnswered } from '@app/core/utils/test.utils';
+import { isAnswered, optionLetter } from '@app/core/utils/test.utils';
 export interface AnswerOptionView {
     /** Option number (1-based); this is what is stored as answerIndex. */
     number: number;
@@ -25,6 +25,8 @@ export class AnswerOptionComponent {
     public readonly readonly = input<boolean>(false);
 
     public readonly choose = output<number>();
+
+    public readonly letter = computed(() => optionLetter(this.option().number));
 
     private readonly isAnswered = computed(() => isAnswered(this.answer()));
 

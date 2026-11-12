@@ -11,7 +11,7 @@ export interface Question extends QuestionOptions {
     answer: number | null;
     /** Explanation shown after answering outside an exam. Optional: not every question has one. */
     explanation?: string;
-    /** Rule excerpts that justify the answer, as "<document>:<entry key>", e.g. "pdr:2.3 б". */
+    /** Rule excerpts that justify the answer, as "<document>:<entry key>", e.g. "protocol:3.1". */
     rules?: string[];
 }
 

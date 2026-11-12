@@ -4,7 +4,7 @@ import {
     QuestionWithCategory,
     UserAnswer,
 } from '@app/core/interfaces/questions.interfaces';
-import { isAnswered } from '@app/core/utils/test.utils';
+import { isAnswered, optionLetter } from '@app/core/utils/test.utils';
 import { AnswerOptionComponent, AnswerOptionView } from '../answer-option/answer-option.component';
 import { ExplanationComponent } from '../explanation/explanation.component';
 
@@ -43,6 +43,11 @@ export class QuestionCardComponent {
     public readonly correctOption = computed(() => {
         const correct = this.question()?.answer;
         return this.options().find((option) => option.number === correct) ?? null;
+    });
+
+    public readonly correctLetter = computed(() => {
+        const correct = this.correctOption();
+        return correct ? optionLetter(correct.number) : '';
     });
 
     public readonly options = computed<AnswerOptionView[]>(() => {

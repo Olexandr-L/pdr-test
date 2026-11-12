@@ -1,59 +1,52 @@
-# PgrTest
+# Тести Крок 2 · Загальна лікарська підготовка
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.20.
+Застосунок для підготовки до ліцензійного іспиту «Крок 2. Загальна лікарська підготовка».
+Створений на основі застосунку тестів ПДР (Angular 21, Angular Material, NGXS).
 
-## Development server
+## Режими
 
-To start a local development server, run:
+- **Іспит** — до 150 випадкових питань з усіх розділів, 1 хвилина на питання, без підказок.
+  Складено, якщо правильних відповідей не менше 60,5% (поріг задається в `EXAM_PASS_RATIO`).
+- **Тести по темах** — іспит або всі питання розділу з поясненнями після кожної відповіді.
+- **Робота над помилками** — питання, на які остання відповідь була неправильною.
+- **Мої результати** — історія спроб (зберігається в localStorage браузера).
 
-```bash
-ng serve
+Налаштування іспиту — у `src/app/core/utils/test.utils.ts`.
+
+## Як додати питання
+
+Питання лежать у `src/assets/questions/*.json`, розділи описані в `src/app/core/maps/categories.map.ts`.
+
+```json
+{
+    "id": 1,
+    "questions": [
+        {
+            "id": 1,
+            "question": "Текст клінічної задачі…",
+            "image": false,
+            "answer": 3,
+            "explanation": "Чому правильна саме ця відповідь.",
+            "1": "Варіант A",
+            "2": "Варіант B",
+            "3": "Варіант C (правильний)",
+            "4": "Варіант D",
+            "5": "Варіант E"
+        }
+    ]
+}
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+- `answer` — номер правильного варіанта (1–5 → A–E).
+- `id` питання має бути унікальним у межах розділу і не змінюватися (на нього посилаються історія та прогрес).
+- `image: true` — показати картинку `src/assets/images/<id розділу>/<id питання>.jpg`.
+- Новий розділ: створити JSON-файл і додати запис у `categories.map.ts` з новим `id`.
 
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+## Розробка
 
 ```bash
-ng generate --help
+npm ci
+npm start          # http://localhost:4200
+npm run build
+npm run deploy     # GitHub Pages, base-href /krok2-test/
 ```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.

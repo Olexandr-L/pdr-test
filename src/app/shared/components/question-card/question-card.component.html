@@ -19,7 +19,7 @@
 
                 @if (!answer()?.isCorrect && correctOption(); as correct) {
                     <p class="explanation-correct">
-                        Правильна відповідь: <strong>{{ correct.number }}. {{ correct.text }}</strong>
+                        Правильна відповідь: <strong>{{ correctLetter() }}. {{ correct.text }}</strong>
                     </p>
                 }
 

@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
 import { TestData } from '@app/core/interfaces/questions.interfaces';
 import { categories } from '@app/core/maps/categories.map';
-import { summarizeTest, TEST_MODE_LABELS } from '@app/core/utils/test.utils';
+import { formatPercent, summarizeTest, TEST_MODE_LABELS } from '@app/core/utils/test.utils';
 
 @Component({
     selector: 'app-summary',
@@ -14,6 +14,8 @@ export class SummaryComponent {
     public readonly test = input.required<TestData>();
 
     public readonly summary = computed(() => summarizeTest(this.test()));
+
+    public readonly scoreText = computed(() => formatPercent(this.summary().score));
 
     public readonly modeLabel = computed(() => TEST_MODE_LABELS[this.summary().mode]);
 

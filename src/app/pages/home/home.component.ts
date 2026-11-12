@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { EXAM_MINUTES, EXAM_SIZE } from '@app/core/utils/test.utils';
+import { EXAM_PASS_RATIO, EXAM_SIZE, formatPercent } from '@app/core/utils/test.utils';
 import { TestsState } from '@app/core/storages/tests/tests.state';
 import { Store } from '@ngxs/store';
 
@@ -19,5 +19,5 @@ export class HomeComponent {
   public readonly mistakesCount = computed(() => this.mistakes().length);
 
   public readonly examSize = EXAM_SIZE;
-  public readonly examMinutes = EXAM_MINUTES;
+  public readonly passPercent = formatPercent(EXAM_PASS_RATIO);
 }

@@ -8,7 +8,7 @@ import { QuestionsActions } from '../storages/questions/questions.action';
 import { TestsActions } from '../storages/tests/tests.action';
 import { TestsState } from '../storages/tests/tests.state';
 import { Router } from '@angular/router';
-import { countMistakes, EXAM_MAX_MISTAKES, EXAM_SIZE, isAnswered, isExamMode, shuffle } from '../utils/test.utils';
+import { EXAM_SIZE, isAnswered, isExamMode, shuffle } from '../utils/test.utils';
 
 @Injectable({
     providedIn: 'root',
@@ -63,11 +63,7 @@ export class TestService {
             return updatedAnswers;
         });
 
-        if (this.isExam() && countMistakes(this._answers()) > EXAM_MAX_MISTAKES) {
-            this.finishTest();
-            return;
-        }
-
+        // Unlike the driving test, Krok does not stop after too many mistakes: the exam runs to the end.
         this.saveProgress();
     }
 

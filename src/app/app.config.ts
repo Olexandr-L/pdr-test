@@ -17,7 +17,7 @@ export const appConfig: ApplicationConfig = {
         provideRouter(routes),
         provideStore(
             [QuestionsState, TestsState, ProgressState],
-            withNgxsStoragePlugin({ keys: [TestsState, ProgressState] }),
+            withNgxsStoragePlugin({ keys: [TestsState, ProgressState], namespace: 'krok2' }),
         ),
         provideHttpClient(),
         {

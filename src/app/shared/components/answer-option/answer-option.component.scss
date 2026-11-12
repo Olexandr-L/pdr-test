@@ -49,3 +49,11 @@
         border-color: var(--mat-sys-secondary);
     }
 }
+
+.letter {
+    display: inline-block;
+    min-width: 1.6em;
+    margin-right: 8px;
+    font-weight: 800;
+    color: var(--mat-sys-primary);
+}

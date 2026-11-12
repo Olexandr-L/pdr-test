@@ -1,7 +1,7 @@
 @if (loaded()) {
     @if (questionsCount()) {
         @if (isExam()) {
-            <app-timer [minutes]="examMinutes" (timeEnd)="onTimeEnd()" />
+            <app-timer [minutes]="examMinutes()" (timeEnd)="onTimeEnd()" />
         }
 
         <app-question-switcher [answers]="answers()" [currentQuestionIndex]="currentQuestionIndex()"
